@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Astyanax KPANIDJA — Portfolio</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">
+    <img src="images/KAMA's Logo.png" alt="TechKAMA Labs" class="nav-logo-img">
+    <span class="nav-logo-text">TechKAMA Labs</span>
+  </div>
+  <button class="nav-burger" id="navBurger" onclick="toggleMenu()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#accueil" onclick="closeMenu()">Accueil</a></li>
+    <li><a href="#competences" onclick="closeMenu()">Compétences</a></li>
+    <li><a href="#experiences" onclick="closeMenu()">Parcours</a></li>
+    <li><a href="#projets" onclick="closeMenu()">Projets</a></li>
+    <li><a href="#contact" onclick="closeMenu()">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="accueil">
+  <div class="hero-bg-shapes">
+    <div class="shape shape-1"></div>
+    <div class="shape shape-2"></div>
+    <div class="shape shape-3"></div>
+  </div>
+  <div class="hero-content">
+    <div class="hero-text">
+      <div class="hero-badge">🇧🇯 Étudiant · Béninois · 20 ans</div>
+      <h1 class="hero-name">Astyanax Amédé M.<br><span>KPANIDJA</span></h1>
+      <p class="hero-title">Génie Électrique & Informatique option Électronique et Électrotechnique | INSTI Lokossa</p>
+      <div class="hero-contacts">
+        <div class="hero-contact-item"><span class="dot"></span>2007kaam@gmail.com</div>
+        <div class="hero-contact-item"><span class="dot"></span>+229 01 95 68 38 07 | +229 01 96 51 38 92</div>
+        <div class="hero-contact-item"><span class="dot"></span>Lokossa, Mono, Bénin</div>
+      </div>
+      <a href="#projets" class="hero-cta">Voir mes projets →</a>
+    </div>
+    <div class="hero-visual">
+      <div style="position:relative; width:280px; height:280px;">
+        <div class="avatar-ring">
+          <!-- Photo de profil : remplace le texte "AK" par une vraie photo si tu en as une -->
+          <div class="avatar-inner" id="avatarInner">AK</div>
+        </div>
+        <!-- Bouton discret pour changer la photo -->
+        <button class="avatar-change-btn" onclick="document.getElementById('avatarFileInput').click()" title="Changer la photo">📷</button>
+        <input type="file" id="avatarFileInput" accept="image/*" style="display:none">
+        <div class="floating-badges">
+          <div class="fbadge fbadge-1">⚡ Électronique</div>
+          <div class="fbadge fbadge-2">🔒 Cybersécurité</div>
+          <div class="fbadge fbadge-3">🎨 Design</div>
+          <div class="fbadge fbadge-4">💻 Python</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMPÉTENCES -->
+<section id="competences">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-tag">Ce que je sais faire</div>
+      <h2 class="section-title">Mes <span>Compétences</span></h2>
+      <div class="divider"></div>
+    </div>
+    <div class="skills-grid">
+      <div class="skill-card card-dev">
+        <div class="skill-card-icon">💻</div>
+        <div class="skill-card-title">Programmation | Développement web</div>
+        <div class="skill-tags">
+          <span class="skill-tag">Python</span>
+          <span class="skill-tag">HTML & CSS</span>
+          <span class="skill-tag">Javascript</span>
+          <span class="skill-tag">C++</span>
+          <span class="skill-tag">React</span>
+          <span class="skill-tag">Algorithmique | Algobox</span>
+        </div>
+      </div>
+      <div class="skill-card card-design">
+        <div class="skill-card-icon">🎨</div>
+        <div class="skill-card-title">Design Graphique</div>
+        <div class="skill-tags">
+          <span class="skill-tag">Photoshop</span>
+          <span class="skill-tag">Illustrator</span>
+          <span class="skill-tag">InDesign</span>
+        </div>
+      </div>
+      <div class="skill-card card-reseau">
+        <div class="skill-card-icon">🌐</div>
+        <div class="skill-card-title">Réseaux & Sécurité</div>
+        <div class="skill-tags">
+          <span class="skill-tag">Cisco Packet Tracer</span>
+          <span class="skill-tag">Cybersécurité</span>
+          <span class="skill-tag">Sécurité réseaux</span>
+        </div>
+      </div>
+      <div class="skill-card card-bio">
+        <div class="skill-card-icon">🏥</div>
+        <div class="skill-card-title">Biomédical & Électrique</div>
+        <div class="skill-tags">
+          <span class="skill-tag">Maintenance biomédicale</span>
+          <span class="skill-tag">Incubateurs/Couveuses</span>
+          <span class="skill-tag">Électrotechnique</span>
+        </div>
+      </div>
+      <div class="skill-card card-office">
+        <div class="skill-card-icon">📊</div>
+        <div class="skill-card-title">Bureautique</div>
+        <div class="skill-tags">
+          <span class="skill-tag">Word</span>
+          <span class="skill-tag">Excel</span>
+          <span class="skill-tag">PowerPoint</span>
+        </div>
+      </div>
+      <div class="skill-card card-langues">
+        <div class="skill-card-icon">🌍</div>
+        <div class="skill-card-title">Langues</div>
+        <div class="lang-row">
+          <span class="lang-name">Français</span>
+          <div class="lang-bar"><div class="lang-fill" style="width:95%"></div></div>
+          <span class="lang-level">Avancé</span>
+        </div>
+        <div class="lang-row">
+          <span class="lang-name">Anglais</span>
+          <div class="lang-bar"><div class="lang-fill" style="width:55%"></div></div>
+          <span class="lang-level">Intermédiaire</span>
+        </div>
+        <div class="lang-row">
+          <span class="lang-name">Goun</span>
+          <div class="lang-bar"><div class="lang-fill" style="width:95%"></div></div>
+          <span class="lang-level">Avancé</span>
+        </div>
+        <div class="lang-row">
+          <span class="lang-name">Torri</span>
+          <div class="lang-bar"><div class="lang-fill" style="width:95%"></div></div>
+          <span class="lang-level">Avancé</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPÉRIENCES + ÉDUCATION -->
+<section id="experiences">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-tag">Mon parcours</div>
+      <h2 class="section-title">Expériences & <span>Éducation</span></h2>
+      <div class="divider"></div>
+    </div>
+
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-dot tl-dot-gold"></div>
+        <div class="timeline-card tl-gold">
+          <div class="tl-header">
+            <div class="tl-title">Formation en Cybersécurité</div>
+            <div class="tl-date tl-date-gold">Juil. 2025 – Présent</div>
+          </div>
+          <div class="tl-org tl-org-gold">UTC Academy · Parakou, Bénin</div>
+          <p class="tl-desc">Protection des systèmes informatiques, sécurité des réseaux et identification des vulnérabilités. Développement de compétences en analyse des menaces et bonnes pratiques de sécurité.</p>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dot tl-dot-purple"></div>
+        <div class="timeline-card tl-purple">
+          <div class="tl-header">
+            <div class="tl-title">Stagiaire – Maintenance d'équipements biomédicaux</div>
+            <div class="tl-date tl-date-purple">Déc. 2025 – Jan. 2026</div>
+          </div>
+          <div class="tl-org tl-org-purple">CNHU-HKM · Cotonou, Bénin</div>
+          <p class="tl-desc">Maintenance préventive et curative d'équipements médicaux. Participation aux interventions techniques sur les dispositifs biomédicaux du centre hospitalier national.</p>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dot tl-dot-teal"></div>
+        <div class="timeline-card tl-teal">
+          <div class="tl-header">
+            <div class="tl-title">Étudiant en Génie Électrique & Informatique</div>
+            <div class="tl-date tl-date-teal">2025 – 2026</div>
+          </div>
+          <div class="tl-org tl-org-teal">INSTI Lokossa · Bénin</div>
+          <p class="tl-desc">1ère année de formation en Génie Électrique & Informatique option Électronique et Électrotechnique.</p>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dot tl-dot-navy"></div>
+        <div class="timeline-card tl-navy">
+          <div class="tl-header">
+            <div class="tl-title">Baccalauréat série D</div>
+            <div class="tl-date tl-date-navy">2025</div>
+          </div>
+          <div class="tl-org tl-org-navy">Collège Roger LAFIA · Parakou, Bénin</div>
+          <p class="tl-desc">Baccalauréat scientifique série D (Biologie & Géologie).</p>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dot tl-dot-navy"></div>
+        <div class="timeline-card tl-navy">
+          <div class="tl-header">
+            <div class="tl-title">Baccalauréat série C</div>
+            <div class="tl-date tl-date-navy">2024</div>
+          </div>
+          <div class="tl-org tl-org-navy">Collège Roger LAFIA · Parakou, Bénin</div>
+          <p class="tl-desc">Baccalauréat scientifique série C (Mathématiques & Sciences Physiques).</p>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dot tl-dot-pink"></div>
+        <div class="timeline-card tl-pink">
+          <div class="tl-header">
+            <div class="tl-title">Graphiste Designer</div>
+            <div class="tl-date tl-date-pink">Juil. – Septembre 2022</div>
+          </div>
+          <div class="tl-org tl-org-pink">Centre FINALO · Parakou, Bénin</div>
+          <p class="tl-desc">Formation intensive à la suite Adobe (Photoshop, Illustrator, InDesign). Réalisation d'affiches, flyers, mises en page print et médias numériques sous supervision professionnelle.</p>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dot tl-dot-navy"></div>
+        <div class="timeline-card tl-navy">
+          <div class="tl-header">
+            <div class="tl-title">BEPC</div>
+            <div class="tl-date tl-date-navy">2021</div>
+          </div>
+          <div class="tl-org tl-org-navy">Collège Roger LAFIA · Parakou, Bénin</div>
+          <p class="tl-desc">Brevet d'Études du Premier Cycle.</p>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dot tl-dot-navy"></div>
+        <div class="timeline-card tl-navy">
+          <div class="tl-header">
+            <div class="tl-title">CEP</div>
+            <div class="tl-date tl-date-navy">2016</div>
+          </div>
+          <div class="tl-org tl-org-navy">CSP Saint KISITO</div>
+          <p class="tl-desc">Certificat d'Études Primaires.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- PROJETS -->
+<section id="projets">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-tag">Ce que j'ai réalisé</div>
+      <h2 class="section-title">Mes <span>Projets</span></h2>
+      <div class="divider"></div>
+    </div>
+    <div class="projects-grid">
+
+      <!-- Incubateur -->
+      <a href="projet_incubateur.html" class="project-card">
+        <div class="project-visual" style="background: linear-gradient(135deg, #FFF7ED, #FDE68A);">
+          <svg viewBox="0 0 320 180" xmlns="http://www.w3.org/2000/svg">
+            <rect x="30" y="25" width="260" height="130" rx="12" fill="#FEF3C7" stroke="#F59E0B" stroke-width="2"/>
+            <rect x="42" y="37" width="236" height="106" rx="8" fill="#FFFBEB" stroke="#FDE68A" stroke-width="1.5"/>
+            <path d="M60 52 Q68 42 76 52 Q84 42 92 52" stroke="#EF4444" stroke-width="2" fill="none" stroke-linecap="round"/>
+            <path d="M120 52 Q128 42 136 52 Q144 42 152 52" stroke="#EF4444" stroke-width="2" fill="none" stroke-linecap="round"/>
+            <path d="M180 52 Q188 42 196 52 Q204 42 212 52" stroke="#EF4444" stroke-width="2" fill="none" stroke-linecap="round"/>
+            <rect x="60" y="90" width="200" height="48" rx="7" fill="#FDE68A" stroke="#F59E0B" stroke-width="1.5"/>
+            <ellipse cx="95" cy="114" rx="16" ry="19" fill="#FEF9C3" stroke="#F59E0B" stroke-width="1.5"/>
+            <ellipse cx="138" cy="114" rx="16" ry="19" fill="#FEF9C3" stroke="#F59E0B" stroke-width="1.5"/>
+            <ellipse cx="181" cy="114" rx="16" ry="19" fill="#FEF9C3" stroke="#F59E0B" stroke-width="1.5"/>
+            <ellipse cx="224" cy="114" rx="16" ry="19" fill="#FEF9C3" stroke="#F59E0B" stroke-width="1.5"/>
+            <rect x="280" y="48" width="12" height="60" rx="6" fill="#FECACA" stroke="#EF4444" stroke-width="1.5"/>
+            <rect x="283" y="65" width="7" height="38" rx="3.5" fill="#EF4444"/>
+            <circle cx="287" cy="112" r="8" fill="#EF4444"/>
+            <text x="160" y="166" fill="#78350F" font-size="11" text-anchor="middle" font-weight="800">Incubateur à régulation thermique</text>
+          </svg>
+        </div>
+        <div class="project-body">
+          <div class="project-tags">
+            <span class="project-tag" style="background:#FEF3C7; color:#92400E;">Électronique</span>
+            <span class="project-tag" style="background:#FFF7ED; color:#C2410C;">Hardware</span>
+          </div>
+          <div class="project-name">Conception d'Incubateur</div>
+          <p class="project-desc">Conception et fabrication d'un incubateur avec régulation thermique électronique. Thermostat, résistances chauffantes et capteur de température.</p>
+          <div class="project-status status-done"><span class="status-dot dot-done"></span>Réalisé · INSTI Lokossa</div>
+          <div class="click-hint"><span class="click-hint-icon">👆</span>Voir les détails & photos</div>
+        </div>
+      </a>
+
+      <!-- Réseau -->
+      <a href="projet_reseau.html" class="project-card">
+        <div class="project-visual" style="background: linear-gradient(135deg, #ECFDF5, #A7F3D0);">
+          <svg viewBox="0 0 320 180" xmlns="http://www.w3.org/2000/svg">
+            <rect x="115" y="70" width="90" height="46" rx="7" fill="#065F46" opacity="0.85"/>
+            <text x="160" y="91" fill="#fff" font-size="9" text-anchor="middle" font-weight="700">ROUTER</text>
+            <text x="160" y="107" fill="#A7F3D0" font-size="7" text-anchor="middle">192.168.1.1</text>
+            <rect x="120" y="145" width="80" height="28" rx="5" fill="#047857"/>
+            <text x="160" y="163" fill="#fff" font-size="8" text-anchor="middle" font-weight="600">SWITCH</text>
+            <rect x="15" y="15" width="60" height="40" rx="5" fill="#0D9488" opacity="0.8"/>
+            <text x="45" y="33" fill="#fff" font-size="8" text-anchor="middle" font-weight="600">PC-A</text>
+            <text x="45" y="47" fill="#CCFBF1" font-size="6" text-anchor="middle">.10</text>
+            <rect x="245" y="15" width="60" height="40" rx="5" fill="#0D9488" opacity="0.8"/>
+            <text x="275" y="33" fill="#fff" font-size="8" text-anchor="middle" font-weight="600">PC-B</text>
+            <text x="275" y="47" fill="#CCFBF1" font-size="6" text-anchor="middle">.20</text>
+            <rect x="15" y="130" width="60" height="40" rx="5" fill="#0D9488" opacity="0.8"/>
+            <text x="45" y="148" fill="#fff" font-size="8" text-anchor="middle" font-weight="600">PC-C</text>
+            <text x="45" y="162" fill="#CCFBF1" font-size="6" text-anchor="middle">.30</text>
+            <rect x="245" y="130" width="60" height="40" rx="5" fill="#0D9488" opacity="0.8"/>
+            <text x="275" y="148" fill="#fff" font-size="8" text-anchor="middle" font-weight="600">PC-D</text>
+            <text x="275" y="162" fill="#CCFBF1" font-size="6" text-anchor="middle">.40</text>
+            <line x1="75" y1="35" x2="115" y2="82" stroke="#10B981" stroke-width="1.5" stroke-dasharray="4,3"/>
+            <line x1="245" y1="35" x2="205" y2="82" stroke="#10B981" stroke-width="1.5" stroke-dasharray="4,3"/>
+            <line x1="75" y1="150" x2="120" y2="157" stroke="#10B981" stroke-width="1.5" stroke-dasharray="4,3"/>
+            <line x1="245" y1="150" x2="200" y2="157" stroke="#10B981" stroke-width="1.5" stroke-dasharray="4,3"/>
+            <line x1="160" y1="116" x2="160" y2="145" stroke="#10B981" stroke-width="1.5" stroke-dasharray="4,3"/>
+          </svg>
+        </div>
+        <div class="project-body">
+          <div class="project-tags">
+            <span class="project-tag" style="background:#CCFBF1; color:#065F46;">Cisco</span>
+            <span class="project-tag" style="background:#ECFDF5; color:#047857;">Réseaux</span>
+          </div>
+          <div class="project-name">Simulation Réseau LAN</div>
+          <p class="project-desc">Configuration d'une topologie réseau d'entreprise avec Cisco Packet Tracer — routeurs, switches, adressage IP et inter-VLAN.</p>
+          <div class="project-status status-done"><span class="status-dot dot-done"></span>Réalisé · INSTI Lokossa</div>
+          <div class="click-hint"><span class="click-hint-icon">👆</span>Voir les détails & captures</div>
+        </div>
+      </a>
+
+      <!-- Cybersécurité -->
+      <div class="project-card project-card-nolink">
+        <div class="project-visual" style="background: linear-gradient(135deg, #EFF6FF, #BFDBFE);">
+          <svg viewBox="0 0 320 180" xmlns="http://www.w3.org/2000/svg">
+            <path d="M160 30 L210 52 L210 100 Q210 130 160 150 Q110 130 110 100 L110 52 Z" fill="#1E40AF" opacity="0.15" stroke="#1E40AF" stroke-width="2"/>
+            <path d="M160 45 L200 62 L200 100 Q200 124 160 140 Q120 124 120 100 L120 62 Z" fill="#3B82F6" opacity="0.2"/>
+            <rect x="145" y="88" width="30" height="24" rx="4" fill="#1E40AF"/>
+            <path d="M150 88 L150 80 Q150 70 160 70 Q170 70 170 80 L170 88" fill="none" stroke="#1E40AF" stroke-width="3" stroke-linecap="round"/>
+            <circle cx="160" cy="100" r="4" fill="#93C5FD"/>
+            <text x="85" y="60" fill="#3B82F6" font-size="11" opacity="0.5">01</text>
+            <text x="230" y="80" fill="#3B82F6" font-size="11" opacity="0.5">10</text>
+            <text x="90" y="130" fill="#3B82F6" font-size="11" opacity="0.5">11</text>
+            <text x="220" y="120" fill="#3B82F6" font-size="11" opacity="0.5">00</text>
+            <text x="160" y="168" fill="#1E40AF" font-size="11" text-anchor="middle" font-weight="700">Formation Cybersécurité</text>
+          </svg>
+        </div>
+        <div class="project-body">
+          <div class="project-tags">
+            <span class="project-tag" style="background:#DBEAFE; color:#1E3A8A;">Cybersécurité</span>
+            <span class="project-tag" style="background:#FEF3C7; color:#92400E;">En cours</span>
+          </div>
+          <div class="project-name">Cybersécurité — UTC Academy</div>
+          <p class="project-desc">Apprentissage des fondamentaux de la cybersécurité : protection des systèmes, analyse des menaces réseau, identification de vulnérabilités et protection des données sensibles.</p>
+          <div class="project-status status-progress"><span class="status-dot dot-progress"></span>En cours · UTC Academy</div>
+        </div>
+      </div>
+
+      <!-- Design graphique -->
+      <a href="projet_design.html" class="project-card">
+        <div class="project-visual" style="background: linear-gradient(135deg, #FDF2F8, #FBCFE8);">
+          <svg viewBox="0 0 320 180" xmlns="http://www.w3.org/2000/svg">
+            <ellipse cx="160" cy="90" rx="70" ry="55" fill="#FCE7F3" stroke="#EC4899" stroke-width="1.5"/>
+            <ellipse cx="160" cy="95" rx="22" ry="18" fill="white"/>
+            <circle cx="110" cy="75" r="12" fill="#EF4444"/>
+            <circle cx="135" cy="55" r="12" fill="#F59E0B"/>
+            <circle cx="165" cy="52" r="12" fill="#10B981"/>
+            <circle cx="195" cy="65" r="12" fill="#3B82F6"/>
+            <circle cx="205" cy="95" r="12" fill="#8B5CF6"/>
+            <rect x="172" y="100" width="55" height="8" rx="4" fill="#78350F" transform="rotate(-40 172 100)"/>
+            <ellipse cx="174" cy="101" rx="8" ry="6" fill="#D97706" transform="rotate(-40 174 101)"/>
+            <text x="160" y="168" fill="#9D174D" font-size="11" text-anchor="middle" font-weight="700">Design graphique</text>
+          </svg>
+        </div>
+        <div class="project-body">
+          <div class="project-tags">
+            <span class="project-tag" style="background:#FCE7F3; color:#9D174D;">Photoshop</span>
+            <span class="project-tag" style="background:#FDF2F8; color:#831843;">Illustrator</span>
+            <span class="project-tag" style="background:#F5F3FF; color:#5B21B6;">InDesign</span>
+          </div>
+          <div class="project-name">Créations Graphiques</div>
+          <p class="project-desc">Réalisations de visuels, mises en page et médias numériques lors du stage au Centre FINALO. Maîtrise de la suite Adobe pour la création de contenu print et digital.</p>
+          <div class="project-status status-done"><span class="status-dot dot-done"></span>Réalisé · 2022</div>
+          <div class="click-hint"><span class="click-hint-icon">👆</span>Voir la galerie</div>
+        </div>
+      </a>
+
+      <!-- Web dev -->
+      <a href="projet_web.html" class="project-card">
+        <div class="project-visual" style="background: linear-gradient(135deg, #F5F3FF, #DDD6FE);">
+          <svg viewBox="0 0 320 180" xmlns="http://www.w3.org/2000/svg">
+            <rect x="50" y="30" width="220" height="130" rx="8" fill="#1E1B4B" opacity="0.85"/>
+            <rect x="50" y="30" width="220" height="28" rx="8" fill="#4C1D95"/>
+            <circle cx="70" cy="44" r="5" fill="#EF4444" opacity="0.8"/>
+            <circle cx="85" cy="44" r="5" fill="#F59E0B" opacity="0.8"/>
+            <circle cx="100" cy="44" r="5" fill="#10B981" opacity="0.8"/>
+            <rect x="115" y="36" width="120" height="16" rx="4" fill="rgba(255,255,255,0.1)"/>
+            <text x="175" y="48" fill="rgba(255,255,255,0.6)" font-size="8" text-anchor="middle">portfolio.html</text>
+            <text x="65" y="75" fill="#A78BFA" font-size="9">&lt;html&gt;</text>
+            <text x="72" y="90" fill="#7DD3FC" font-size="9">&lt;style&gt; color: #8B5CF6; &lt;/style&gt;</text>
+            <text x="72" y="105" fill="#86EFAC" font-size="9">function hello() {"{"}</text>
+            <text x="80" y="119" fill="#FCD34D" font-size="9">console.log('Astyanax');</text>
+            <text x="72" y="133" fill="#86EFAC" font-size="9">{"}"}</text>
+            <text x="65" y="147" fill="#A78BFA" font-size="9">&lt;/html&gt;</text>
+            <text x="160" y="174" fill="#5B21B6" font-size="11" text-anchor="middle" font-weight="700">Développement Web</text>
+          </svg>
+        </div>
+        <div class="project-body">
+          <div class="project-tags">
+            <span class="project-tag" style="background:#EDE9FE; color:#5B21B6;">HTML/CSS</span>
+            <span class="project-tag" style="background:#F5F3FF; color:#6D28D9;">JavaScript</span>
+          </div>
+          <div class="project-name">Projets Web Personnels</div>
+          <p class="project-desc">Création de pages web et interfaces avec HTML, CSS et JavaScript. Mise en pratique des connaissances en développement front-end à travers des projets personnels et académiques.</p>
+          <div class="project-status status-progress"><span class="status-dot dot-progress"></span>En développement</div>
+          <div class="click-hint"><span class="click-hint-icon">👆</span>Voir mes sites & liens</div>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-tag">Me joindre</div>
+      <h2 class="section-title">Entrer en <span>Contact</span></h2>
+      <div class="divider"></div>
+    </div>
+    <div class="contact-grid">
+      <div class="contact-info">
+        <p class="contact-intro">Disponible pour des stages, des collaborations techniques ou des opportunités professionnelles dans les domaines de l'électronique, l'informatique ou le design.</p>
+        <div class="contact-items">
+          <div class="contact-item">
+            <div class="contact-icon ci-gold">📧</div>
+            <div>
+              <div class="contact-label">Email</div>
+              <div class="contact-value">2007kaam@gmail.com</div>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon ci-teal">📞</div>
+            <div>
+              <div class="contact-label">Téléphone</div>
+              <div class="contact-value">+229 01 95 68 38 07 | +229 01 96 51 38 92</div>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon ci-purple">📍</div>
+            <div>
+              <div class="contact-label">Localisation</div>
+              <div class="contact-value">Lokossa, Mono, Bénin</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="contact-form-wrapper">
+        <div class="form-group">
+          <label>Votre nom</label>
+          <input type="text" placeholder="Jean Dupont">
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" placeholder="jean@exemple.com">
+        </div>
+        <div class="form-group">
+          <label>Message</label>
+          <textarea placeholder="Bonjour Astyanax, je vous contacte pour..."></textarea>
+        </div>
+        <button class="submit-btn" onclick="alert('Merci pour votre message ! Pour fonctionner, ce formulaire doit être connecté à un service d\'envoi email.')">Envoyer le message →</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 <span>Astyanax Amédé M. KPANIDJA</span> · Étudiant en Génie Électrique & Informatique · INSTI | Lokossa, Bénin</p>
+</footer>
+
+<script>
+  // ====== MENU BURGER MOBILE ======
+  function toggleMenu() {
+    document.getElementById('navLinks').classList.toggle('open');
+    document.getElementById('navBurger').classList.toggle('active');
+  }
+  function closeMenu() {
+    document.getElementById('navLinks').classList.remove('open');
+    document.getElementById('navBurger').classList.remove('active');
+  }
+
+  // ====== PHOTO DE PROFIL ======
+  document.getElementById('avatarFileInput').addEventListener('change', function () {
+    const file = this.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = function (e) {
+      const avatar = document.getElementById('avatarInner');
+      avatar.style.backgroundImage = `url('${e.target.result}')`;
+      avatar.style.backgroundSize = 'cover';
+      avatar.style.backgroundPosition = 'center';
+      avatar.textContent = '';
+    };
+    reader.readAsDataURL(file);
+    this.value = '';
+  });
+</script>
+
+<!-- ═══ BOUTON WHATSAPP FLOTTANT ═══ -->
+
+<!-- ═══ BOUTON WHATSAPP FLOTTANT ═══ -->
+
+<a  class="wa-float"
+  href="https://wa.me/2290195683807?text=Bonjour%20TechKAMA%20Labs%2C%20je%20vous%20contacte%20depuis%20votre%20portfolio."
+  target="_blank"
+  rel="noopener noreferrer"
+  aria-label="Contacter sur WhatsApp"
+>
+  <img
+    src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/whatsapp.svg"
+    width="28"
+    height="28"
+    alt="WhatsApp"
+    style="filter: brightness(0) invert(1); display:block;"
+  >
+  <span class="wa-tooltip">Discutons sur WhatsApp !</span>
+</a>
+
+<style>
+.wa-float {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  z-index: 9999;
+  width: 58px;
+  height: 58px;
+  background: #25D366;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 18px rgba(37,211,102,0.45);
+  text-decoration: none;
+  transition: transform 0.22s cubic-bezier(0.4,0,0.2,1),
+              box-shadow 0.22s cubic-bezier(0.4,0,0.2,1);
+  animation: waPop 0.5s 1.2s cubic-bezier(0.4,0,0.2,1) both;
+}
+.wa-float:hover {
+  transform: scale(1.12) translateY(-3px);
+  box-shadow: 0 8px 28px rgba(37,211,102,0.6);
+}
+.wa-tooltip {
+  position: absolute;
+  right: 68px;
+  background: #1a1a1a;
+  color: #fff;
+  font-size: 0.78rem;
+  font-weight: 600;
+  white-space: nowrap;
+  padding: 6px 12px;
+  border-radius: 8px;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateX(6px);
+  transition: opacity 0.18s ease, transform 0.18s ease;
+  font-family: 'Segoe UI', system-ui, sans-serif;
+}
+.wa-tooltip::after {
+  content: '';
+  position: absolute;
+  right: -6px;
+  top: 50%;
+  transform: translateY(-50%);
+  border: 6px solid transparent;
+  border-left-color: #1a1a1a;
+  border-right: none;
+}
+.wa-float:hover .wa-tooltip {
+  opacity: 1;
+  transform: translateX(0);
+}
+@keyframes waPop {
+  from { opacity: 0; transform: scale(0.5); }
+  to   { opacity: 1; transform: scale(1); }
+}
+@media (max-width: 480px) {
+  .wa-float { bottom: 18px; right: 18px; width: 52px; height: 52px; }
+  .wa-tooltip { display: none; }
+}
+</style>
+<!-- ═══════════════════════════════════ -->
+
+</body>
+</html>

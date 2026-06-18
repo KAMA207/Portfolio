@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Projets Web — Astyanax KPANIDJA</title>
+<style>
+  :root {
+    --navy: #1B2A4A; --purple: #7C3AED; --purple-light: #EDE9FE;
+    --light: #F8F9FC; --white: #FFFFFF; --gray: #64748B; --dark: #1E293B;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--light); color: var(--dark); }
+
+  nav {
+    position: fixed; top: 0; width: 100%; z-index: 100;
+    background: rgba(27,42,74,0.97); backdrop-filter: blur(10px);
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 0 2.5rem; height: 60px;
+  }
+  .nav-logo { color: #7C3AED; font-weight: 700; font-size: 1.1rem; }
+  .nav-back { color: rgba(255,255,255,0.8); text-decoration: none; font-size: 0.9rem; transition: color 0.2s; }
+  .nav-back:hover { color: #7C3AED; }
+
+  .project-hero {
+    padding: 100px 2.5rem 60px;
+    background: linear-gradient(135deg, #F5F3FF 0%, #EDE9FE 50%, #DDD6FE 100%);
+    border-bottom: 3px solid var(--purple);
+  }
+  .hero-inner { max-width: 1000px; margin: 0 auto; }
+  .project-category { display: inline-block; background: var(--purple); color: #fff; font-size: 0.75rem; font-weight: 700; letter-spacing: 1px; padding: 5px 14px; border-radius: 20px; text-transform: uppercase; margin-bottom: 1rem; }
+  .project-title { font-size: 2.6rem; font-weight: 800; color: var(--navy); line-height: 1.15; margin-bottom: 1rem; }
+  .project-subtitle { font-size: 1.05rem; color: var(--gray); line-height: 1.7; max-width: 650px; }
+
+  .project-body { max-width: 1000px; margin: 0 auto; padding: 4rem 2.5rem; }
+  .section-label { font-size: 0.78rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--purple); margin-bottom: 0.5rem; }
+  .section-heading { font-size: 1.6rem; font-weight: 800; color: var(--navy); margin-bottom: 0.5rem; }
+  .section-sub { color: var(--gray); font-size: 0.88rem; margin-bottom: 2.5rem; font-style: italic; }
+
+  /* ====== GRILLE DE PROJETS ====== */
+  .sites-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+    gap: 1.75rem;
+    margin-bottom: 3.5rem;
+  }
+
+  /* Carte projet */
+  .site-card {
+    background: var(--white);
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    transition: transform 0.25s, box-shadow 0.25s;
+    display: flex; flex-direction: column;
+  }
+  .site-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(124,58,237,0.15); }
+
+  /* Aperçu image ou placeholder */
+  .site-preview {
+    height: 165px;
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(135deg, #F5F3FF, #DDD6FE);
+    flex-shrink: 0;
+  }
+  .site-preview img {
+    width: 100%; height: 100%;
+    object-fit: cover; display: block;
+  }
+  .site-preview-placeholder {
+    width: 100%; height: 100%;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 0.4rem;
+  }
+  .site-preview-placeholder .ph-icon { font-size: 2.8rem; }
+  .site-preview-placeholder .ph-text { font-size: 0.75rem; font-weight: 600; color: #5B21B6; }
+
+  /* Bouton changer aperçu */
+  .preview-change-btn {
+    position: absolute; bottom: 8px; right: 8px;
+    background: rgba(124,58,237,0.85); color: white;
+    font-size: 0.65rem; font-weight: 700;
+    padding: 4px 10px; border-radius: 10px;
+    border: none; cursor: pointer;
+    transition: background 0.2s;
+  }
+  .preview-change-btn:hover { background: var(--purple); }
+
+  /* Corps carte */
+  .site-body { padding: 1.25rem 1.5rem 1.5rem; flex: 1; display: flex; flex-direction: column; }
+  .site-tags { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 0.65rem; }
+  .site-tag { font-size: 0.7rem; padding: 3px 10px; border-radius: 20px; font-weight: 700; }
+
+  .site-name { font-size: 1.05rem; font-weight: 800; color: var(--navy); margin-bottom: 0.4rem; }
+  .site-desc { font-size: 0.85rem; color: var(--gray); line-height: 1.6; margin-bottom: 1rem; flex: 1; }
+
+  .site-actions { display: flex; gap: 0.75rem; align-items: center; flex-wrap: wrap; margin-top: auto; }
+  .site-btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 8px 16px; border-radius: 8px;
+    font-size: 0.82rem; font-weight: 700;
+    text-decoration: none; border: none; cursor: pointer;
+    transition: opacity 0.2s, transform 0.15s;
+  }
+  .site-btn:hover { opacity: 0.85; transform: translateY(-1px); }
+  .btn-primary { background: var(--purple); color: white; }
+  .btn-secondary { background: var(--purple-light); color: #5B21B6; }
+  .btn-disabled { background: #F1F5F9; color: #94A3B8; cursor: not-allowed; pointer-events: none; }
+
+  .status-badge {
+    display: inline-flex; align-items: center; gap: 5px;
+    font-size: 0.72rem; font-weight: 600;
+    padding: 4px 12px; border-radius: 20px;
+  }
+  .status-soon { background: #FEF3C7; color: #92400E; }
+  .status-live { background: #ECFDF5; color: #065F46; }
+  .status-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+  .dot-soon { background: #F59E0B; }
+  .dot-live { background: #10B981; animation: pulse 1.5s ease-in-out infinite; }
+  @keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:0.4; } }
+
+  /* ====== MODALE AJOUT/ÉDITION PROJET ====== */
+  .modal-overlay {
+    display: none; position: fixed; inset: 0;
+    background: rgba(0,0,0,0.55); z-index: 500;
+    align-items: center; justify-content: center;
+    padding: 1rem;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal {
+    background: white; border-radius: 20px;
+    padding: 2rem; width: 100%; max-width: 520px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+    max-height: 90vh; overflow-y: auto;
+  }
+  .modal h3 { font-size: 1.2rem; font-weight: 800; color: var(--navy); margin-bottom: 1.5rem; }
+  .form-group { margin-bottom: 1rem; }
+  .form-group label { display: block; font-size: 0.8rem; font-weight: 700; color: var(--navy); margin-bottom: 5px; }
+  .form-group input, .form-group textarea, .form-group select {
+    width: 100%; padding: 10px 14px;
+    border: 1.5px solid #DDD6FE; border-radius: 10px;
+    font-size: 0.88rem; color: var(--dark);
+    font-family: inherit; outline: none;
+    transition: border-color 0.2s;
+  }
+  .form-group input:focus, .form-group textarea:focus, .form-group select:focus { border-color: var(--purple); }
+  .form-group textarea { resize: vertical; min-height: 80px; }
+  .tags-input { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
+  .tag-chip {
+    background: var(--purple-light); color: #5B21B6;
+    font-size: 0.75rem; font-weight: 700;
+    padding: 4px 10px; border-radius: 20px;
+    display: flex; align-items: center; gap: 5px;
+    cursor: pointer;
+  }
+  .tag-chip.selected { background: var(--purple); color: white; }
+  .modal-actions { display: flex; gap: 0.75rem; margin-top: 1.5rem; justify-content: flex-end; }
+  .btn-cancel { background: #F1F5F9; color: var(--gray); border: none; padding: 10px 20px; border-radius: 10px; font-weight: 700; cursor: pointer; font-size: 0.88rem; }
+  .btn-save { background: var(--purple); color: white; border: none; padding: 10px 24px; border-radius: 10px; font-weight: 700; cursor: pointer; font-size: 0.88rem; }
+  .btn-save:hover { background: #6D28D9; }
+
+  /* Carte "Ajouter un projet" */
+  .add-project-card {
+    border: 2px dashed #C4B5FD; border-radius: 18px;
+    padding: 2.5rem 1.5rem;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 0.75rem; text-align: center;
+    background: #FAFAFE; cursor: pointer;
+    transition: background 0.2s, border-color 0.2s;
+    min-height: 200px;
+  }
+  .add-project-card:hover { background: #F5F3FF; border-color: var(--purple); }
+  .add-project-card .icon { font-size: 2.5rem; }
+  .add-project-card .title { font-size: 1rem; font-weight: 700; color: var(--purple); }
+  .add-project-card .sub { font-size: 0.82rem; color: var(--gray); }
+
+  /* Inputs cachés */
+  .hidden-file { display: none; }
+
+  /* Skills */
+  .skills-row { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-bottom: 3.5rem; }
+  .skill-pill { background: var(--purple-light); color: #5B21B6; font-size: 0.82rem; font-weight: 600; padding: 7px 16px; border-radius: 30px; border: 1px solid #DDD6FE; }
+
+  .back-btn { display: inline-flex; align-items: center; gap: 8px; background: var(--navy); color: white; text-decoration: none; padding: 12px 24px; border-radius: 10px; font-weight: 600; font-size: 0.9rem; transition: background 0.2s; }
+  .back-btn:hover { background: #2d3f6b; }
+
+  @media (max-width: 768px) {
+    .project-body { padding: 2.5rem 1.25rem; }
+    .sites-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">AK.</div>
+  <a href="index.html" class="nav-back">← Retour au portfolio</a>
+</nav>
+
+<div class="project-hero">
+  <div class="hero-inner">
+    <div class="project-category">💻 Développement Web</div>
+    <h1 class="project-title">Projets Web Personnels</h1>
+    <p class="project-subtitle">Sites web, applications et interfaces réalisés en HTML, CSS et JavaScript. Clique sur une carte pour modifier, ou ajoute un nouveau projet avec le bouton ➕.</p>
+  </div>
+</div>
+
+<div class="project-body">
+
+  <div class="section-label">Mes sites & applications</div>
+  <h2 class="section-heading">Projets en ligne</h2>
+  <p class="section-sub">📌 Clique sur "➕ Ajouter un projet" pour renseigner tes vrais projets avec leurs liens</p>
+
+  <!-- Inputs fichiers cachés -->
+  <input type="file" id="previewFileInput" accept="image/*" class="hidden-file">
+
+  <div class="sites-grid" id="sitesGrid">
+
+    <!-- Carte placeholder 1 -->
+    <div class="site-card" id="card-1">
+      <div class="site-preview" style="background: linear-gradient(135deg, #F5F3FF, #DDD6FE);">
+        <div class="site-preview-placeholder">
+          <div class="ph-icon">🌐</div>
+          <div class="ph-text">Aperçu à venir</div>
+        </div>
+        <button class="preview-change-btn" onclick="changePreview('card-1', event)">📷 Aperçu</button>
+      </div>
+      <div class="site-body">
+        <div class="site-tags">
+          <span class="site-tag" style="background:#EDE9FE; color:#5B21B6;">HTML/CSS</span>
+          <span class="site-tag" style="background:#F5F3FF; color:#6D28D9;">JavaScript</span>
+        </div>
+        <div class="site-name">Projet Web #1</div>
+        <p class="site-desc">Description du projet à renseigner. Clique sur "✏️ Modifier" pour personnaliser cette carte.</p>
+        <div class="site-actions">
+          <a href="#" class="site-btn btn-disabled">🔗 Lien à venir</a>
+          <div class="status-badge status-soon"><span class="status-dot dot-soon"></span>Bientôt</div>
+          <button class="site-btn btn-secondary" onclick="openModal('card-1')">✏️ Modifier</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Carte placeholder 2 -->
+    <div class="site-card" id="card-2">
+      <div class="site-preview" style="background: linear-gradient(135deg, #ECFDF5, #A7F3D0);">
+        <div class="site-preview-placeholder">
+          <div class="ph-icon">📱</div>
+          <div class="ph-text">Aperçu à venir</div>
+        </div>
+        <button class="preview-change-btn" onclick="changePreview('card-2', event)">📷 Aperçu</button>
+      </div>
+      <div class="site-body">
+        <div class="site-tags">
+          <span class="site-tag" style="background:#CCFBF1; color:#134E4A;">HTML/CSS</span>
+          <span class="site-tag" style="background:#ECFDF5; color:#065F46;">Responsive</span>
+        </div>
+        <div class="site-name">Projet Web #2</div>
+        <p class="site-desc">Description du projet à renseigner. Clique sur "✏️ Modifier" pour personnaliser cette carte.</p>
+        <div class="site-actions">
+          <a href="#" class="site-btn btn-disabled">🔗 Lien à venir</a>
+          <div class="status-badge status-soon"><span class="status-dot dot-soon"></span>Bientôt</div>
+          <button class="site-btn btn-secondary" onclick="openModal('card-2')">✏️ Modifier</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Carte placeholder 3 -->
+    <div class="site-card" id="card-3">
+      <div class="site-preview" style="background: linear-gradient(135deg, #FFF7ED, #FDE68A);">
+        <div class="site-preview-placeholder">
+          <div class="ph-icon">⚙️</div>
+          <div class="ph-text">Aperçu à venir</div>
+        </div>
+        <button class="preview-change-btn" onclick="changePreview('card-3', event)">📷 Aperçu</button>
+      </div>
+      <div class="site-body">
+        <div class="site-tags">
+          <span class="site-tag" style="background:#FEF3C7; color:#92400E;">JavaScript</span>
+          <span class="site-tag" style="background:#FFF7ED; color:#C2410C;">Application</span>
+        </div>
+        <div class="site-name">Projet Web #3</div>
+        <p class="site-desc">Description du projet à renseigner. Clique sur "✏️ Modifier" pour personnaliser cette carte.</p>
+        <div class="site-actions">
+          <a href="#" class="site-btn btn-disabled">🔗 Lien à venir</a>
+          <div class="status-badge status-soon"><span class="status-dot dot-soon"></span>Bientôt</div>
+          <button class="site-btn btn-secondary" onclick="openModal('card-3')">✏️ Modifier</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Carte "Ajouter un projet" -->
+    <div class="add-project-card" onclick="openModal(null)">
+      <div class="icon">➕</div>
+      <div class="title">Ajouter un projet</div>
+      <div class="sub">Renseigne le nom, la description, les technologies et le lien de ton prochain projet.</div>
+    </div>
+
+  </div>
+
+  <div class="section-label">Compétences mobilisées</div>
+  <h2 class="section-heading">Technologies utilisées</h2>
+  <div class="skills-row">
+    <span class="skill-pill">HTML5</span>
+    <span class="skill-pill">CSS3</span>
+    <span class="skill-pill">JavaScript</span>
+    <span class="skill-pill">Design responsive</span>
+    <span class="skill-pill">Flexbox / Grid</span>
+    <span class="skill-pill">Animations CSS</span>
+    <span class="skill-pill">GitHub Pages</span>
+  </div>
+
+  <a href="index.html" class="back-btn">← Retour au portfolio</a>
+</div>
+
+<!-- ====== MODALE ====== -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModalOutside(event)">
+  <div class="modal">
+    <h3 id="modalTitle">✏️ Modifier le projet</h3>
+
+    <div class="form-group">
+      <label>Nom du projet</label>
+      <input type="text" id="inputName" placeholder="Ex : Portfolio personnel">
+    </div>
+    <div class="form-group">
+      <label>Description</label>
+      <textarea id="inputDesc" placeholder="Décris ton projet en 1-2 phrases..."></textarea>
+    </div>
+    <div class="form-group">
+      <label>Lien du site (URL)</label>
+      <input type="url" id="inputUrl" placeholder="https://mon-site.netlify.app">
+    </div>
+    <div class="form-group">
+      <label>Lien GitHub (optionnel)</label>
+      <input type="url" id="inputGithub" placeholder="https://github.com/...">
+    </div>
+    <div class="form-group">
+      <label>Statut</label>
+      <select id="inputStatus">
+        <option value="soon">🟡 Bientôt en ligne</option>
+        <option value="live">🟢 En ligne</option>
+        <option value="progress">🔵 En développement</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Technologies (clique pour sélectionner)</label>
+      <div class="tags-input" id="tagsList">
+        <span class="tag-chip" onclick="toggleTag(this)">HTML/CSS</span>
+        <span class="tag-chip" onclick="toggleTag(this)">JavaScript</span>
+        <span class="tag-chip" onclick="toggleTag(this)">Python</span>
+        <span class="tag-chip" onclick="toggleTag(this)">React</span>
+        <span class="tag-chip" onclick="toggleTag(this)">FastAPI</span>
+        <span class="tag-chip" onclick="toggleTag(this)">Node.js</span>
+        <span class="tag-chip" onclick="toggleTag(this)">Responsive</span>
+        <span class="tag-chip" onclick="toggleTag(this)">Application</span>
+        <span class="tag-chip" onclick="toggleTag(this)">API</span>
+        <span class="tag-chip" onclick="toggleTag(this)">Mobile</span>
+      </div>
+    </div>
+
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="closeModal()">Annuler</button>
+      <button class="btn-save" onclick="saveProject()">💾 Enregistrer</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  let currentCardId = null;
+  let cardCounter = 3; // on a déjà 3 cartes
+
+  const TAG_COLORS = {
+    'HTML/CSS':    ['#EDE9FE','#5B21B6'],
+    'JavaScript':  ['#F5F3FF','#6D28D9'],
+    'Python':      ['#DBEAFE','#1E3A8A'],
+    'React':       ['#ECFDF5','#065F46'],
+    'FastAPI':     ['#FEF3C7','#92400E'],
+    'Node.js':     ['#DCFCE7','#14532D'],
+    'Responsive':  ['#CCFBF1','#134E4A'],
+    'Application': ['#FFF7ED','#C2410C'],
+    'API':         ['#F0F9FF','#075985'],
+    'Mobile':      ['#FDF4FF','#6B21A8'],
+  };
+
+  // ====== MODALE ======
+  function openModal(cardId) {
+    currentCardId = cardId;
+    const overlay = document.getElementById('modalOverlay');
+    overlay.classList.add('open');
+
+    // Reset
+    document.getElementById('inputName').value = '';
+    document.getElementById('inputDesc').value = '';
+    document.getElementById('inputUrl').value = '';
+    document.getElementById('inputGithub').value = '';
+    document.getElementById('inputStatus').value = 'soon';
+    document.querySelectorAll('.tag-chip').forEach(c => c.classList.remove('selected'));
+
+    if (cardId) {
+      document.getElementById('modalTitle').textContent = '✏️ Modifier le projet';
+      // Pré-remplir depuis la carte existante
+      const card = document.getElementById(cardId);
+      const name = card.querySelector('.site-name')?.textContent || '';
+      const desc = card.querySelector('.site-desc')?.textContent || '';
+      const urlEl = card.querySelector('a.btn-primary');
+      const url = urlEl ? urlEl.href : '';
+      document.getElementById('inputName').value = name;
+      document.getElementById('inputDesc').value = desc;
+      if (url && !url.endsWith('#')) document.getElementById('inputUrl').value = url;
+    } else {
+      document.getElementById('modalTitle').textContent = '➕ Nouveau projet';
+    }
+  }
+
+  function closeModal() {
+    document.getElementById('modalOverlay').classList.remove('open');
+    currentCardId = null;
+  }
+
+  function closeModalOutside(e) {
+    if (e.target === document.getElementById('modalOverlay')) closeModal();
+  }
+
+  function toggleTag(el) { el.classList.toggle('selected'); }
+
+  function saveProject() {
+    const name    = document.getElementById('inputName').value.trim() || 'Mon projet';
+    const desc    = document.getElementById('inputDesc').value.trim() || 'Description à venir.';
+    const url     = document.getElementById('inputUrl').value.trim();
+    const github  = document.getElementById('inputGithub').value.trim();
+    const status  = document.getElementById('inputStatus').value;
+    const selTags = [...document.querySelectorAll('.tag-chip.selected')].map(c => c.textContent);
+
+    const statusHTML = {
+      soon:     `<div class="status-badge status-soon"><span class="status-dot dot-soon"></span>Bientôt</div>`,
+      live:     `<div class="status-badge status-live"><span class="status-dot dot-live"></span>En ligne</div>`,
+      progress: `<div class="status-badge status-soon"><span class="status-dot" style="background:#3B82F6"></span>En cours</div>`,
+    }[status];
+
+    const linkHTML = url
+      ? `<a href="${url}" target="_blank" class="site-btn btn-primary">🔗 Voir le site</a>`
+      : `<a href="#" class="site-btn btn-disabled">🔗 Lien à venir</a>`;
+
+    const githubHTML = github
+      ? `<a href="${github}" target="_blank" class="site-btn btn-secondary">💻 GitHub</a>`
+      : '';
+
+    const tagsHTML = selTags.length > 0
+      ? selTags.map(t => {
+          const [bg, color] = TAG_COLORS[t] || ['#EDE9FE','#5B21B6'];
+          return `<span class="site-tag" style="background:${bg}; color:${color};">${t}</span>`;
+        }).join('')
+      : `<span class="site-tag" style="background:#EDE9FE; color:#5B21B6;">Web</span>`;
+
+    if (currentCardId) {
+      // Modifier une carte existante
+      const card = document.getElementById(currentCardId);
+      card.querySelector('.site-tags').innerHTML = tagsHTML;
+      card.querySelector('.site-name').textContent = name;
+      card.querySelector('.site-desc').textContent = desc;
+      card.querySelector('.site-actions').innerHTML =
+        linkHTML + githubHTML + statusHTML +
+        `<button class="site-btn btn-secondary" onclick="openModal('${currentCardId}')">✏️ Modifier</button>`;
+    } else {
+      // Créer une nouvelle carte
+      cardCounter++;
+      const newId = `card-${cardCounter}`;
+      const card = document.createElement('div');
+      card.className = 'site-card';
+      card.id = newId;
+      card.innerHTML = `
+        <div class="site-preview" style="background: linear-gradient(135deg, #F5F3FF, #DDD6FE);">
+          <div class="site-preview-placeholder">
+            <div class="ph-icon">💻</div>
+            <div class="ph-text">Aperçu à venir</div>
+          </div>
+          <button class="preview-change-btn" onclick="changePreview('${newId}', event)">📷 Aperçu</button>
+        </div>
+        <div class="site-body">
+          <div class="site-tags">${tagsHTML}</div>
+          <div class="site-name">${name}</div>
+          <p class="site-desc">${desc}</p>
+          <div class="site-actions">
+            ${linkHTML}${githubHTML}${statusHTML}
+            <button class="site-btn btn-secondary" onclick="openModal('${newId}')">✏️ Modifier</button>
+          </div>
+        </div>
+      `;
+      const addCard = document.querySelector('.add-project-card');
+      document.getElementById('sitesGrid').insertBefore(card, addCard);
+    }
+
+    closeModal();
+  }
+
+  // ====== CHANGER L'APERÇU IMAGE ======
+  let previewTargetId = null;
+
+  function changePreview(cardId, e) {
+    e.stopPropagation();
+    previewTargetId = cardId;
+    document.getElementById('previewFileInput').click();
+  }
+
+  document.getElementById('previewFileInput').addEventListener('change', function () {
+    const file = this.files[0];
+    if (!file || !previewTargetId) return;
+    const reader = new FileReader();
+    reader.onload = function (e) {
+      const card = document.getElementById(previewTargetId);
+      const preview = card.querySelector('.site-preview');
+      // Remplacer le placeholder par l'image
+      const placeholder = preview.querySelector('.site-preview-placeholder');
+      if (placeholder) placeholder.remove();
+      let img = preview.querySelector('img');
+      if (!img) {
+        img = document.createElement('img');
+        preview.insertBefore(img, preview.firstChild);
+      }
+      img.src = e.target.result;
+      img.alt = file.name;
+    };
+    reader.readAsDataURL(file);
+    this.value = '';
+    previewTargetId = null;
+  });
+
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+</script>
+</body>
+
+<!-- ═══ BOUTON WHATSAPP FLOTTANT ═══ -->
+
+<!-- ═══ BOUTON WHATSAPP FLOTTANT ═══ -->
+
+<a  class="wa-float"
+  href="https://wa.me/2290195683807?text=Bonjour%20TechKAMA%20Labs%2C%20je%20vous%20contacte%20depuis%20votre%20portfolio."
+  target="_blank"
+  rel="noopener noreferrer"
+  aria-label="Contacter sur WhatsApp"
+>
+  <img
+    src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/whatsapp.svg"
+    width="28"
+    height="28"
+    alt="WhatsApp"
+    style="filter: brightness(0) invert(1); display:block;"
+  >
+  <span class="wa-tooltip">Discutons sur WhatsApp !</span>
+</a>
+
+<style>
+.wa-float {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  z-index: 9999;
+  width: 58px;
+  height: 58px;
+  background: #25D366;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 18px rgba(37,211,102,0.45);
+  text-decoration: none;
+  transition: transform 0.22s cubic-bezier(0.4,0,0.2,1),
+              box-shadow 0.22s cubic-bezier(0.4,0,0.2,1);
+  animation: waPop 0.5s 1.2s cubic-bezier(0.4,0,0.2,1) both;
+}
+.wa-float:hover {
+  transform: scale(1.12) translateY(-3px);
+  box-shadow: 0 8px 28px rgba(37,211,102,0.6);
+}
+.wa-tooltip {
+  position: absolute;
+  right: 68px;
+  background: #1a1a1a;
+  color: #fff;
+  font-size: 0.78rem;
+  font-weight: 600;
+  white-space: nowrap;
+  padding: 6px 12px;
+  border-radius: 8px;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateX(6px);
+  transition: opacity 0.18s ease, transform 0.18s ease;
+  font-family: 'Segoe UI', system-ui, sans-serif;
+}
+.wa-tooltip::after {
+  content: '';
+  position: absolute;
+  right: -6px;
+  top: 50%;
+  transform: translateY(-50%);
+  border: 6px solid transparent;
+  border-left-color: #1a1a1a;
+  border-right: none;
+}
+.wa-float:hover .wa-tooltip {
+  opacity: 1;
+  transform: translateX(0);
+}
+@keyframes waPop {
+  from { opacity: 0; transform: scale(0.5); }
+  to   { opacity: 1; transform: scale(1); }
+}
+@media (max-width: 480px) {
+  .wa-float { bottom: 18px; right: 18px; width: 52px; height: 52px; }
+  .wa-tooltip { display: none; }
+}
+</style>
+<!-- ═══════════════════════════════════ -->
+
+</html>

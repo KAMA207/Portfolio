@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Conception d'Incubateur — Astyanax KPANIDJA</title>
+<style>
+  :root {
+    --navy: #1B2A4A; --gold: #E8A020; --amber: #F59E0B;
+    --light: #F8F9FC; --white: #FFFFFF; --gray: #64748B; --dark: #1E293B;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--light); color: var(--dark); }
+
+  nav {
+    position: fixed; top: 0; width: 100%; z-index: 100;
+    background: rgba(27,42,74,0.97); backdrop-filter: blur(10px);
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 0 2.5rem; height: 60px;
+  }
+  .nav-logo { color: var(--gold); font-weight: 700; font-size: 1.1rem; }
+  .nav-back { color: rgba(255,255,255,0.8); text-decoration: none; font-size: 0.9rem; display: flex; align-items: center; gap: 6px; transition: color 0.2s; }
+  .nav-back:hover { color: var(--gold); }
+
+  .project-hero {
+    padding: 100px 2.5rem 60px;
+    background: linear-gradient(135deg, #FFF7ED 0%, #FEF3C7 50%, #FDE68A 100%);
+    border-bottom: 3px solid var(--amber);
+  }
+  .hero-inner { max-width: 1000px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; }
+  .project-category { display: inline-block; background: var(--amber); color: #fff; font-size: 0.75rem; font-weight: 700; letter-spacing: 1px; padding: 5px 14px; border-radius: 20px; text-transform: uppercase; margin-bottom: 1rem; }
+  .project-title { font-size: 2.6rem; font-weight: 800; color: var(--navy); line-height: 1.15; margin-bottom: 1rem; }
+  .project-subtitle { font-size: 1.05rem; color: var(--gray); line-height: 1.7; margin-bottom: 1.5rem; }
+  .project-meta { display: flex; flex-wrap: wrap; gap: 1rem; }
+  .meta-item { background: white; border-radius: 10px; padding: 10px 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.07); }
+  .meta-label { font-size: 0.7rem; color: var(--gray); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+  .meta-value { font-size: 0.9rem; color: var(--navy); font-weight: 700; margin-top: 2px; }
+  .hero-visual { display: flex; justify-content: center; align-items: center; }
+  .hero-svg-wrap { background: white; border-radius: 20px; padding: 1.5rem; box-shadow: 0 8px 32px rgba(0,0,0,0.1); width: 100%; max-width: 380px; }
+  .hero-svg-wrap svg { width: 100%; height: auto; }
+
+  .project-body { max-width: 1000px; margin: 0 auto; padding: 4rem 2.5rem; }
+  .section-label { font-size: 0.78rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--amber); margin-bottom: 0.5rem; }
+  .section-heading { font-size: 1.6rem; font-weight: 800; color: var(--navy); margin-bottom: 2rem; }
+
+  /* ====== GALERIE ====== */
+  #fileInput { display: none; }
+
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin-bottom: 3.5rem;
+  }
+  .gallery-item {
+    border-radius: 14px;
+    overflow: hidden;
+    aspect-ratio: 4/3;
+    position: relative;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    background: #FEF3C7;
+  }
+  .gallery-item img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .gallery-item .overlay {
+    position: absolute; inset: 0;
+    background: rgba(245,158,11,0.5);
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; transition: opacity 0.2s;
+  }
+  .gallery-item:hover { transform: scale(1.03); box-shadow: 0 8px 24px rgba(245,158,11,0.3); }
+  .gallery-item:hover .overlay { opacity: 1; }
+  .overlay span { color: white; font-size: 2rem; }
+
+  /* Carte placeholder (pas encore de photo) */
+  .gallery-placeholder {
+    border-radius: 14px;
+    aspect-ratio: 4/3;
+    background: #FEF3C7;
+    border: 2px dashed #F59E0B;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    transition: background 0.2s, border-color 0.2s;
+    position: relative;
+  }
+  .gallery-placeholder:hover { background: #FDE68A; border-color: var(--gold); }
+  .gallery-placeholder .ph-icon { font-size: 2.2rem; }
+  .gallery-placeholder .ph-label { font-size: 0.75rem; color: #92400E; font-weight: 600; text-align: center; padding: 0 0.5rem; }
+  .gallery-placeholder .ph-hint { position: absolute; bottom: 8px; right: 8px; background: var(--amber); color: white; font-size: 0.65rem; font-weight: 700; padding: 2px 8px; border-radius: 10px; }
+
+  /* Carte "Ajouter" -->
+  .gallery-add-card {
+    border-radius: 14px;
+    aspect-ratio: 4/3;
+    border: 2px dashed #FCD34D;
+    background: #FFFBEB;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    transition: background 0.2s, border-color 0.2s;
+  }
+  .gallery-add-card:hover { background: #FEF3C7; border-color: var(--amber); }
+  .gallery-add-card .add-icon { font-size: 2rem; }
+  .gallery-add-card .add-text { font-size: 0.78rem; color: #92400E; font-weight: 700; text-align: center; }
+
+  /* ====== DESCRIPTION ====== */
+  .desc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 3.5rem; }
+  .desc-card { background: var(--white); border-radius: 16px; padding: 1.75rem; box-shadow: 0 2px 12px rgba(0,0,0,0.06); }
+  .desc-card h3 { font-size: 1rem; font-weight: 700; color: var(--navy); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; }
+  .desc-card p, .desc-card li { font-size: 0.9rem; color: var(--gray); line-height: 1.7; }
+  .desc-card ul { padding-left: 1.2rem; }
+  .desc-card li { margin-bottom: 6px; }
+
+  .skills-row { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-bottom: 3.5rem; }
+  .skill-pill { background: #FEF3C7; color: #92400E; font-size: 0.82rem; font-weight: 600; padding: 7px 16px; border-radius: 30px; border: 1px solid #FDE68A; }
+
+  .back-btn { display: inline-flex; align-items: center; gap: 8px; background: var(--navy); color: white; text-decoration: none; padding: 12px 24px; border-radius: 10px; font-weight: 600; font-size: 0.9rem; transition: background 0.2s; }
+  .back-btn:hover { background: #2d3f6b; }
+
+  /* ====== LIGHTBOX ====== */
+  .lightbox { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.88); z-index: 999; align-items: center; justify-content: center; flex-direction: column; gap: 1rem; }
+  .lightbox.open { display: flex; }
+  .lightbox-img { max-width: 90vw; max-height: 82vh; border-radius: 10px; object-fit: contain; }
+  .lightbox-close { position: absolute; top: 20px; right: 28px; color: white; font-size: 2rem; cursor: pointer; line-height: 1; }
+  .lightbox-caption { color: rgba(255,255,255,0.75); font-size: 0.85rem; }
+
+  @media (max-width: 768px) {
+    .hero-inner, .desc-grid { grid-template-columns: 1fr; }
+    .hero-visual { display: none; }
+    .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+    .project-body { padding: 2.5rem 1.25rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">AK.</div>
+  <a href="index.html" class="nav-back">← Retour au portfolio</a>
+</nav>
+
+<div class="project-hero">
+  <div class="hero-inner">
+    <div>
+      <div class="project-category">⚡ Électronique & Hardware</div>
+      <h1 class="project-title">Conception d'Incubateur</h1>
+      <p class="project-subtitle">Conception et fabrication d'un incubateur avec régulation thermique électronique, réalisé dans le cadre de la formation en génie électrique à l'INSTI Lokossa.</p>
+      <div class="project-meta">
+        <div class="meta-item">
+          <div class="meta-label">Statut</div>
+          <div class="meta-value">✅ Réalisé</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">Domaine</div>
+          <div class="meta-value">Électronique</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">Formation</div>
+          <div class="meta-value">INSTI Lokossa</div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-svg-wrap">
+        <svg viewBox="0 0 340 220" xmlns="http://www.w3.org/2000/svg">
+          <rect x="40" y="30" width="260" height="150" rx="14" fill="#FEF3C7" stroke="#F59E0B" stroke-width="2"/>
+          <rect x="52" y="42" width="236" height="126" rx="10" fill="#FFFBEB" stroke="#FDE68A" stroke-width="1.5"/>
+          <path d="M70 58 Q78 48 86 58 Q94 48 102 58" stroke="#EF4444" stroke-width="2" fill="none" stroke-linecap="round"/>
+          <path d="M130 58 Q138 48 146 58 Q154 48 162 58" stroke="#EF4444" stroke-width="2" fill="none" stroke-linecap="round"/>
+          <path d="M190 58 Q198 48 206 58 Q214 48 222 58" stroke="#EF4444" stroke-width="2" fill="none" stroke-linecap="round"/>
+          <rect x="70" y="100" width="200" height="55" rx="8" fill="#FDE68A" stroke="#F59E0B" stroke-width="1.5"/>
+          <ellipse cx="105" cy="127" rx="18" ry="21" fill="#FEF9C3" stroke="#F59E0B" stroke-width="1.5"/>
+          <ellipse cx="150" cy="127" rx="18" ry="21" fill="#FEF9C3" stroke="#F59E0B" stroke-width="1.5"/>
+          <ellipse cx="195" cy="127" rx="18" ry="21" fill="#FEF9C3" stroke="#F59E0B" stroke-width="1.5"/>
+          <ellipse cx="240" cy="127" rx="18" ry="21" fill="#FEF9C3" stroke="#F59E0B" stroke-width="1.5"/>
+          <rect x="295" y="55" width="14" height="70" rx="7" fill="#FECACA" stroke="#EF4444" stroke-width="1.5"/>
+          <rect x="298" y="75" width="8" height="44" rx="4" fill="#EF4444"/>
+          <circle cx="302" cy="125" r="9" fill="#EF4444" stroke="#DC2626" stroke-width="1.5"/>
+          <text x="302" y="148" fill="#92400E" font-size="9" text-anchor="middle" font-weight="700">37°C</text>
+          <circle cx="68" cy="170" r="4" fill="#FCD34D"/>
+          <circle cx="82" cy="170" r="4" fill="#FCD34D"/>
+          <circle cx="96" cy="170" r="4" fill="#FCD34D"/>
+          <text x="170" y="207" fill="#78350F" font-size="13" text-anchor="middle" font-weight="800">Incubateur à régulation thermique</text>
+        </svg>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="project-body">
+
+  <div class="section-label">Galerie photos</div>
+  <h2 class="section-heading">Photos du projet</h2>
+
+  <!-- Input file caché -->
+  <input type="file" id="fileInput" accept="image/*" multiple>
+
+  <div class="gallery-grid" id="galleryGrid">
+
+    <!-- 6 emplacements placeholder -->
+    <div class="gallery-placeholder" onclick="triggerUpload(this)">
+      <div class="ph-icon">📷</div>
+      <div class="ph-label">Vue générale<br>de l'incubateur</div>
+      <div class="ph-hint">+ Photo</div>
+    </div>
+    <div class="gallery-placeholder" onclick="triggerUpload(this)">
+      <div class="ph-icon">🔌</div>
+      <div class="ph-label">Circuit de<br>régulation</div>
+      <div class="ph-hint">+ Photo</div>
+    </div>
+    <div class="gallery-placeholder" onclick="triggerUpload(this)">
+      <div class="ph-icon">🥚</div>
+      <div class="ph-label">Intérieur &<br>plateau à œufs</div>
+      <div class="ph-hint">+ Photo</div>
+    </div>
+    <div class="gallery-placeholder" onclick="triggerUpload(this)">
+      <div class="ph-icon">🌡️</div>
+      <div class="ph-label">Capteur de<br>température</div>
+      <div class="ph-hint">+ Photo</div>
+    </div>
+    <div class="gallery-placeholder" onclick="triggerUpload(this)">
+      <div class="ph-icon">💨</div>
+      <div class="ph-label">Système de<br>ventilation</div>
+      <div class="ph-hint">+ Photo</div>
+    </div>
+    <div class="gallery-placeholder" onclick="triggerUpload(this)">
+      <div class="ph-icon">✅</div>
+      <div class="ph-label">Résultat<br>final</div>
+      <div class="ph-hint">+ Photo</div>
+    </div>
+
+    <!-- Carte "Ajouter d'autres photos" -->
+    <div class="gallery-add-card" onclick="document.getElementById('fileInput').click(); currentTarget = null;">
+      <div class="add-icon">➕</div>
+      <div class="add-text">Ajouter<br>d'autres photos</div>
+    </div>
+
+  </div>
+
+  <!-- DESCRIPTION -->
+  <div class="section-label">À propos du projet</div>
+  <h2 class="section-heading">Description & Objectifs</h2>
+  <div class="desc-grid">
+    <div class="desc-card">
+      <h3>📋 Contexte</h3>
+      <p>Ce projet a été réalisé dans le cadre de la formation en génie électrique et informatique à l'INSTI Lokossa. L'objectif était de concevoir un incubateur fonctionnel capable de maintenir une température stable pour l'éclosion des œufs.</p>
+    </div>
+    <div class="desc-card">
+      <h3>🎯 Objectifs</h3>
+      <ul>
+        <li>Concevoir le circuit de régulation thermique</li>
+        <li>Fabriquer la structure physique de l'incubateur</li>
+        <li>Maintenir une température constante (~37–38°C)</li>
+        <li>Assurer une ventilation homogène</li>
+        <li>Contrôler l'humidité interne</li>
+      </ul>
+    </div>
+    <div class="desc-card">
+      <h3>⚙️ Fonctionnement</h3>
+      <p>Le système utilise un thermostat électronique couplé à des résistances chauffantes. Un capteur de température surveille en permanence l'intérieur et régule l'alimentation des résistances pour maintenir la température optimale.</p>
+    </div>
+    <div class="desc-card">
+      <h3>📚 Ce que j'ai appris</h3>
+      <ul>
+        <li>Câblage et montage électronique</li>
+        <li>Régulation thermique par thermostat</li>
+        <li>Lecture de schémas électroniques</li>
+        <li>Fabrication et assemblage manuel</li>
+        <li>Tests et mise au point</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- SKILLS -->
+  <div class="section-label">Compétences mobilisées</div>
+  <h2 class="section-heading">Technologies & outils</h2>
+  <div class="skills-row">
+    <span class="skill-pill">Électronique</span>
+    <span class="skill-pill">Régulation thermique</span>
+    <span class="skill-pill">Câblage</span>
+    <span class="skill-pill">Thermostat</span>
+    <span class="skill-pill">Capteurs</span>
+    <span class="skill-pill">Fabrication manuelle</span>
+    <span class="skill-pill">Lecture de schémas</span>
+  </div>
+
+  <a href="index.html" class="back-btn">← Retour au portfolio</a>
+</div>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <span class="lightbox-close" onclick="closeLightbox()">×</span>
+  <img class="lightbox-img" id="lightbox-img" src="" alt="">
+  <div class="lightbox-caption" id="lightbox-caption"></div>
+</div>
+
+<script>
+  let currentTarget = null; // placeholder cliqué
+
+  // Cliquer sur un placeholder → ouvre l'input pour CE placeholder
+  function triggerUpload(el) {
+    currentTarget = el;
+    const input = document.getElementById('fileInput');
+    input.onchange = function () { handleFile(this, currentTarget); };
+    input.click();
+  }
+
+  // Remplace un placeholder par l'image choisie
+  function handleFile(input, target) {
+    const file = input.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = function (e) {
+      // Créer un vrai gallery-item
+      const item = document.createElement('div');
+      item.className = 'gallery-item';
+      item.onclick = function () { openLightbox(this); };
+      item.innerHTML = `
+        <img src="${e.target.result}" alt="${file.name}">
+        <div class="overlay"><span>🔍</span></div>
+      `;
+      // Remplacer le placeholder
+      target.replaceWith(item);
+    };
+    reader.readAsDataURL(file);
+    input.value = '';
+  }
+
+  // Bouton "Ajouter d'autres" → ajoute avant la carte +
+  document.getElementById('fileInput').addEventListener('change', function () {
+    if (currentTarget !== null) return; // déjà géré par handleFile
+    const grid = document.getElementById('galleryGrid');
+    const addCard = grid.querySelector('.gallery-add-card');
+    Array.from(this.files).forEach(file => {
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        const item = document.createElement('div');
+        item.className = 'gallery-item';
+        item.onclick = function () { openLightbox(this); };
+        item.innerHTML = `
+          <img src="${e.target.result}" alt="${file.name}">
+          <div class="overlay"><span>🔍</span></div>
+        `;
+        grid.insertBefore(item, addCard);
+      };
+      reader.readAsDataURL(file);
+    });
+    this.value = '';
+    currentTarget = null;
+  });
+
+  // Lightbox
+  function openLightbox(el) {
+    const img = el.querySelector('img');
+    if (!img) return;
+    document.getElementById('lightbox-img').src = img.src;
+    document.getElementById('lightbox-caption').textContent = img.alt || '';
+    document.getElementById('lightbox').classList.add('open');
+  }
+  function closeLightbox() {
+    document.getElementById('lightbox').classList.remove('open');
+  }
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+</script>
+</body>
+
+<!-- ═══ BOUTON WHATSAPP FLOTTANT ═══ -->
+
+<!-- ═══ BOUTON WHATSAPP FLOTTANT ═══ -->
+
+<a  class="wa-float"
+  href="https://wa.me/2290195683807?text=Bonjour%20TechKAMA%20Labs%2C%20je%20vous%20contacte%20depuis%20votre%20portfolio."
+  target="_blank"
+  rel="noopener noreferrer"
+  aria-label="Contacter sur WhatsApp"
+>
+  <img
+    src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/whatsapp.svg"
+    width="28"
+    height="28"
+    alt="WhatsApp"
+    style="filter: brightness(0) invert(1); display:block;"
+  >
+  <span class="wa-tooltip">Discutons sur WhatsApp !</span>
+</a>
+
+<style>
+.wa-float {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  z-index: 9999;
+  width: 58px;
+  height: 58px;
+  background: #25D366;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 18px rgba(37,211,102,0.45);
+  text-decoration: none;
+  transition: transform 0.22s cubic-bezier(0.4,0,0.2,1),
+              box-shadow 0.22s cubic-bezier(0.4,0,0.2,1);
+  animation: waPop 0.5s 1.2s cubic-bezier(0.4,0,0.2,1) both;
+}
+.wa-float:hover {
+  transform: scale(1.12) translateY(-3px);
+  box-shadow: 0 8px 28px rgba(37,211,102,0.6);
+}
+.wa-tooltip {
+  position: absolute;
+  right: 68px;
+  background: #1a1a1a;
+  color: #fff;
+  font-size: 0.78rem;
+  font-weight: 600;
+  white-space: nowrap;
+  padding: 6px 12px;
+  border-radius: 8px;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateX(6px);
+  transition: opacity 0.18s ease, transform 0.18s ease;
+  font-family: 'Segoe UI', system-ui, sans-serif;
+}
+.wa-tooltip::after {
+  content: '';
+  position: absolute;
+  right: -6px;
+  top: 50%;
+  transform: translateY(-50%);
+  border: 6px solid transparent;
+  border-left-color: #1a1a1a;
+  border-right: none;
+}
+.wa-float:hover .wa-tooltip {
+  opacity: 1;
+  transform: translateX(0);
+}
+@keyframes waPop {
+  from { opacity: 0; transform: scale(0.5); }
+  to   { opacity: 1; transform: scale(1); }
+}
+@media (max-width: 480px) {
+  .wa-float { bottom: 18px; right: 18px; width: 52px; height: 52px; }
+  .wa-tooltip { display: none; }
+}
+</style>
+<!-- ═══════════════════════════════════ -->
+
+</html>

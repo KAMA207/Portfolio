@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Simulation Réseau LAN — Astyanax KPANIDJA</title>
+<style>
+  :root {
+    --navy: #1B2A4A; --teal: #0D9488; --teal-light: #CCFBF1;
+    --light: #F8F9FC; --white: #FFFFFF; --gray: #64748B; --dark: #1E293B;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--light); color: var(--dark); }
+
+  nav {
+    position: fixed; top: 0; width: 100%; z-index: 100;
+    background: rgba(27,42,74,0.97); backdrop-filter: blur(10px);
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 0 2.5rem; height: 60px;
+  }
+  .nav-logo { color: #0D9488; font-weight: 700; font-size: 1.1rem; }
+  .nav-back { color: rgba(255,255,255,0.8); text-decoration: none; font-size: 0.9rem; display: flex; align-items: center; gap: 6px; transition: color 0.2s; }
+  .nav-back:hover { color: #0D9488; }
+
+  .project-hero {
+    padding: 100px 2.5rem 60px;
+    background: linear-gradient(135deg, #ECFDF5 0%, #D1FAE5 50%, #A7F3D0 100%);
+    border-bottom: 3px solid var(--teal);
+  }
+  .hero-inner { max-width: 1000px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; }
+  .project-category { display: inline-block; background: var(--teal); color: #fff; font-size: 0.75rem; font-weight: 700; letter-spacing: 1px; padding: 5px 14px; border-radius: 20px; text-transform: uppercase; margin-bottom: 1rem; }
+  .project-title { font-size: 2.6rem; font-weight: 800; color: var(--navy); line-height: 1.15; margin-bottom: 1rem; }
+  .project-subtitle { font-size: 1.05rem; color: var(--gray); line-height: 1.7; margin-bottom: 1.5rem; }
+  .project-meta { display: flex; flex-wrap: wrap; gap: 1rem; }
+  .meta-item { background: white; border-radius: 10px; padding: 10px 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.07); }
+  .meta-label { font-size: 0.7rem; color: var(--gray); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+  .meta-value { font-size: 0.9rem; color: var(--navy); font-weight: 700; margin-top: 2px; }
+  .hero-visual { display: flex; justify-content: center; }
+  .hero-svg-wrap { background: white; border-radius: 20px; padding: 1.5rem; box-shadow: 0 8px 32px rgba(0,0,0,0.1); width: 100%; max-width: 380px; }
+  .hero-svg-wrap svg { width: 100%; height: auto; }
+
+  .project-body { max-width: 1000px; margin: 0 auto; padding: 4rem 2.5rem; }
+  .section-label { font-size: 0.78rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--teal); margin-bottom: 0.5rem; }
+  .section-heading { font-size: 1.6rem; font-weight: 800; color: var(--navy); margin-bottom: 2rem; }
+
+  /* ====== GALERIE ====== */
+  #fileInput { display: none; }
+
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin-bottom: 3.5rem;
+  }
+  .gallery-item {
+    border-radius: 14px;
+    overflow: hidden;
+    aspect-ratio: 4/3;
+    position: relative;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    background: #ECFDF5;
+  }
+  .gallery-item img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .gallery-item .overlay {
+    position: absolute; inset: 0;
+    background: rgba(13,148,136,0.5);
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; transition: opacity 0.2s;
+  }
+  .gallery-item:hover { transform: scale(1.03); box-shadow: 0 8px 24px rgba(13,148,136,0.3); }
+  .gallery-item:hover .overlay { opacity: 1; }
+  .overlay span { color: white; font-size: 2rem; }
+
+  .gallery-placeholder {
+    border-radius: 14px;
+    aspect-ratio: 4/3;
+    background: #ECFDF5;
+    border: 2px dashed var(--teal);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    transition: background 0.2s, border-color 0.2s;
+    position: relative;
+  }
+  .gallery-placeholder:hover { background: #A7F3D0; border-color: #047857; }
+  .gallery-placeholder .ph-icon { font-size: 2.2rem; }
+  .gallery-placeholder .ph-label { font-size: 0.75rem; color: #065F46; font-weight: 600; text-align: center; padding: 0 0.5rem; }
+  .gallery-placeholder .ph-hint { position: absolute; bottom: 8px; right: 8px; background: var(--teal); color: white; font-size: 0.65rem; font-weight: 700; padding: 2px 8px; border-radius: 10px; }
+
+  .gallery-add-card {
+    border-radius: 14px;
+    aspect-ratio: 4/3;
+    border: 2px dashed #6EE7B7;
+    background: #F0FDF9;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    transition: background 0.2s, border-color 0.2s;
+  }
+  .gallery-add-card:hover { background: #CCFBF1; border-color: var(--teal); }
+  .gallery-add-card .add-icon { font-size: 2rem; }
+  .gallery-add-card .add-text { font-size: 0.78rem; color: #065F46; font-weight: 700; text-align: center; }
+
+  /* ====== DESCRIPTION ====== */
+  .desc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 3.5rem; }
+  .desc-card { background: var(--white); border-radius: 16px; padding: 1.75rem; box-shadow: 0 2px 12px rgba(0,0,0,0.06); }
+  .desc-card h3 { font-size: 1rem; font-weight: 700; color: var(--navy); margin-bottom: 1rem; }
+  .desc-card p, .desc-card li { font-size: 0.9rem; color: var(--gray); line-height: 1.7; }
+  .desc-card ul { padding-left: 1.2rem; }
+  .desc-card li { margin-bottom: 6px; }
+
+  .skills-row { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-bottom: 3.5rem; }
+  .skill-pill { background: var(--teal-light); color: #065F46; font-size: 0.82rem; font-weight: 600; padding: 7px 16px; border-radius: 30px; border: 1px solid #A7F3D0; }
+
+  .back-btn { display: inline-flex; align-items: center; gap: 8px; background: var(--navy); color: white; text-decoration: none; padding: 12px 24px; border-radius: 10px; font-weight: 600; font-size: 0.9rem; transition: background 0.2s; }
+  .back-btn:hover { background: #2d3f6b; }
+
+  /* ====== LIGHTBOX ====== */
+  .lightbox { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.88); z-index: 999; align-items: center; justify-content: center; flex-direction: column; gap: 1rem; }
+  .lightbox.open { display: flex; }
+  .lightbox-img { max-width: 90vw; max-height: 82vh; border-radius: 10px; object-fit: contain; }
+  .lightbox-close { position: absolute; top: 20px; right: 28px; color: white; font-size: 2rem; cursor: pointer; line-height: 1; }
+  .lightbox-caption { color: rgba(255,255,255,0.75); font-size: 0.85rem; }
+
+  @media (max-width: 768px) {
+    .hero-inner, .desc-grid { grid-template-columns: 1fr; }
+    .hero-visual { display: none; }
+    .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+    .project-body { padding: 2.5rem 1.25rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">AK.</div>
+  <a href="index.html" class="nav-back">← Retour au portfolio</a>
+</nav>
+
+<div class="project-hero">
+  <div class="hero-inner">
+    <div>
+      <div class="project-category">🌐 Réseaux & Cisco</div>
+      <h1 class="project-title">Simulation Réseau LAN</h1>
+      <p class="project-subtitle">Configuration et simulation d'une topologie réseau d'entreprise avec Cisco Packet Tracer — routeurs, switches, adressage IP et communication inter-VLAN.</p>
+      <div class="project-meta">
+        <div class="meta-item"><div class="meta-label">Statut</div><div class="meta-value">✅ Réalisé</div></div>
+        <div class="meta-item"><div class="meta-label">Outil</div><div class="meta-value">Cisco Packet Tracer</div></div>
+        <div class="meta-item"><div class="meta-label">Formation</div><div class="meta-value">INSTI Lokossa</div></div>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-svg-wrap">
+        <svg viewBox="0 0 340 220" xmlns="http://www.w3.org/2000/svg">
+          <rect x="125" y="85" width="90" height="50" rx="8" fill="#065F46" opacity="0.85"/>
+          <text x="170" y="108" fill="#fff" font-size="10" text-anchor="middle" font-weight="700">ROUTER</text>
+          <text x="170" y="122" fill="#A7F3D0" font-size="8" text-anchor="middle">192.168.1.1</text>
+          <rect x="130" y="170" width="80" height="32" rx="6" fill="#047857"/>
+          <text x="170" y="190" fill="#fff" font-size="9" text-anchor="middle" font-weight="600">SWITCH</text>
+          <rect x="20" y="20" width="65" height="45" rx="6" fill="#0D9488" opacity="0.8"/>
+          <text x="52" y="40" fill="#fff" font-size="9" text-anchor="middle" font-weight="600">PC-A</text>
+          <text x="52" y="54" fill="#CCFBF1" font-size="7" text-anchor="middle">.10</text>
+          <rect x="255" y="20" width="65" height="45" rx="6" fill="#0D9488" opacity="0.8"/>
+          <text x="287" y="40" fill="#fff" font-size="9" text-anchor="middle" font-weight="600">PC-B</text>
+          <text x="287" y="54" fill="#CCFBF1" font-size="7" text-anchor="middle">.20</text>
+          <rect x="20" y="155" width="65" height="45" rx="6" fill="#0D9488" opacity="0.8"/>
+          <text x="52" y="175" fill="#fff" font-size="9" text-anchor="middle" font-weight="600">PC-C</text>
+          <text x="52" y="189" fill="#CCFBF1" font-size="7" text-anchor="middle">.30</text>
+          <rect x="255" y="155" width="65" height="45" rx="6" fill="#0D9488" opacity="0.8"/>
+          <text x="287" y="175" fill="#fff" font-size="9" text-anchor="middle" font-weight="600">PC-D</text>
+          <text x="287" y="189" fill="#CCFBF1" font-size="7" text-anchor="middle">.40</text>
+          <rect x="138" y="30" width="64" height="38" rx="6" fill="#134E4A"/>
+          <text x="170" y="48" fill="#fff" font-size="9" text-anchor="middle" font-weight="600">SERVER</text>
+          <text x="170" y="60" fill="#A7F3D0" font-size="7" text-anchor="middle">.100</text>
+          <line x1="85" y1="42" x2="125" y2="98" stroke="#10B981" stroke-width="1.5" stroke-dasharray="5,3"/>
+          <line x1="255" y1="42" x2="215" y2="98" stroke="#10B981" stroke-width="1.5" stroke-dasharray="5,3"/>
+          <line x1="85" y1="177" x2="130" y2="182" stroke="#10B981" stroke-width="1.5" stroke-dasharray="5,3"/>
+          <line x1="255" y1="177" x2="210" y2="182" stroke="#10B981" stroke-width="1.5" stroke-dasharray="5,3"/>
+          <line x1="170" y1="68" x2="170" y2="85" stroke="#10B981" stroke-width="1.5" stroke-dasharray="5,3"/>
+          <line x1="170" y1="135" x2="170" y2="170" stroke="#10B981" stroke-width="1.5" stroke-dasharray="5,3"/>
+          <text x="170" y="213" fill="#065F46" font-size="11" text-anchor="middle" font-weight="800">Topologie réseau entreprise</text>
+        </svg>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="project-body">
+
+  <div class="section-label">Galerie captures d'écran</div>
+  <h2 class="section-heading">Captures Packet Tracer</h2>
+
+  <!-- Input file caché -->
+  <input type="file" id="fileInput" accept="image/*" multiple>
+
+  <div class="gallery-grid" id="galleryGrid">
+
+    <!-- 6 placeholders avec labels spécifiques -->
+    <div class="gallery-placeholder" onclick="triggerUpload(this)">
+      <img src="images/A.png" alt="Projet Réseau LAN - Capture 1" style="display:none;">
+      <div class="ph-label">Topologie<br>complète</div>
+      <div class="ph-hint">+ Capture</div>
+    </div>
+    <div class="gallery-placeholder" onclick="triggerUpload(this)">
+      <img src="images/B.png" alt="Projet Réseau LAN - Capture 2" style="display:none;">
+      <div class="ph-label">Config<br>du routeur</div>
+      <div class="ph-hint">+ Capture</div>
+    </div>
+    <div class="gallery-placeholder" onclick="triggerUpload(this)">
+      <img src="images/C.png" alt="Projet Réseau LAN - Capture 3" style="display:none;">
+      <div class="ph-label">Config<br>du switch</div>
+      <div class="ph-hint">+ Capture</div>
+    </div>
+    <div class="gallery-placeholder" onclick="triggerUpload(this)">
+      <img src="images/D.png" alt="Projet Réseau LAN - Capture 4" style="display:none;">
+      <div class="ph-label">Plan<br>d'adressage IP</div>
+      <div class="ph-hint">+ Capture</div>
+    </div>
+    <div class="gallery-placeholder" onclick="triggerUpload(this)">
+      <img src="images/E.png" alt="Projet Réseau LAN - Capture 5" style="display:none;">
+      <div class="ph-icon">✅</div>
+      <div class="ph-label">Test ping<br>réussi</div>
+      <div class="ph-hint">+ Capture</div>
+    </div>
+    <div class="gallery-placeholder" onclick="triggerUpload(this)">
+      <img src="images/F.png" alt="Projet Réseau LAN - Capture 6" style="display:none;">
+      <div class="ph-icon">📊</div>
+      <div class="ph-label">Simulation<br>du trafic</div>
+      <div class="ph-hint">+ Capture</div>
+    </div>
+
+    <!-- Carte "Ajouter d'autres captures" -->
+    <div class="gallery-add-card" onclick="document.getElementById('fileInput').click(); currentTarget = null;">
+      <div class="add-icon">➕</div>
+      <div class="add-text">Ajouter<br>d'autres captures</div>
+    </div>
+
+  </div>
+
+  <!-- DESCRIPTION -->
+  <div class="section-label">À propos du projet</div>
+  <h2 class="section-heading">Description & Objectifs</h2>
+  <div class="desc-grid">
+    <div class="desc-card">
+      <h3>📋 Contexte</h3>
+      <p>Projet réalisé dans le cadre du cours de réseaux informatiques à l'INSTI Lokossa. L'objectif était de simuler une infrastructure réseau d'entreprise complète avec Cisco Packet Tracer.</p>
+    </div>
+    <div class="desc-card">
+      <h3>🎯 Objectifs</h3>
+      <ul>
+        <li>Concevoir une topologie réseau LAN</li>
+        <li>Configurer routeurs et switches Cisco</li>
+        <li>Mettre en place un plan d'adressage IP</li>
+        <li>Tester la connectivité (ping, traceroute)</li>
+        <li>Simuler le trafic réseau</li>
+      </ul>
+    </div>
+    <div class="desc-card">
+      <h3>⚙️ Fonctionnement</h3>
+      <p>La topologie inclut un routeur central, des switches de distribution et des postes clients. Chaque machine est configurée avec une adresse IP statique. La communication inter-réseau est assurée par les tables de routage du routeur.</p>
+    </div>
+    <div class="desc-card">
+      <h3>📚 Ce que j'ai appris</h3>
+      <ul>
+        <li>Adressage IP et sous-réseaux</li>
+        <li>Configuration CLI Cisco (IOS)</li>
+        <li>Protocoles de routage</li>
+        <li>Modèle OSI en pratique</li>
+        <li>Dépannage réseau</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="section-label">Compétences mobilisées</div>
+  <h2 class="section-heading">Technologies & outils</h2>
+  <div class="skills-row">
+    <span class="skill-pill">Cisco Packet Tracer</span>
+    <span class="skill-pill">Adressage IP</span>
+    <span class="skill-pill">Routage statique</span>
+    <span class="skill-pill">VLANs</span>
+    <span class="skill-pill">CLI Cisco IOS</span>
+    <span class="skill-pill">Modèle OSI</span>
+    <span class="skill-pill">TCP/IP</span>
+  </div>
+
+  <a href="index.html" class="back-btn">← Retour au portfolio</a>
+</div>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <span class="lightbox-close" onclick="closeLightbox()">×</span>
+  <img class="lightbox-img" id="lightbox-img" src="" alt="">
+  <div class="lightbox-caption" id="lightbox-caption"></div>
+</div>
+
+<script>
+  let currentTarget = null;
+
+  function triggerUpload(el) {
+    currentTarget = el;
+    const input = document.getElementById('fileInput');
+    input.onchange = function () { handleFile(this, currentTarget); };
+    input.click();
+  }
+
+  function handleFile(input, target) {
+    const file = input.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = function (e) {
+      const item = document.createElement('div');
+      item.className = 'gallery-item';
+      item.onclick = function () { openLightbox(this); };
+      item.innerHTML = `
+        <img src="${e.target.result}" alt="${file.name}">
+        <div class="overlay"><span>🔍</span></div>
+      `;
+      target.replaceWith(item);
+    };
+    reader.readAsDataURL(file);
+    input.value = '';
+  }
+
+  document.getElementById('fileInput').addEventListener('change', function () {
+    if (currentTarget !== null) return;
+    const grid = document.getElementById('galleryGrid');
+    const addCard = grid.querySelector('.gallery-add-card');
+    Array.from(this.files).forEach(file => {
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        const item = document.createElement('div');
+        item.className = 'gallery-item';
+        item.onclick = function () { openLightbox(this); };
+        item.innerHTML = `
+          <img src="${e.target.result}" alt="${file.name}">
+          <div class="overlay"><span>🔍</span></div>
+        `;
+        grid.insertBefore(item, addCard);
+      };
+      reader.readAsDataURL(file);
+    });
+    this.value = '';
+    currentTarget = null;
+  });
+
+  function openLightbox(el) {
+    const img = el.querySelector('img');
+    if (!img) return;
+    document.getElementById('lightbox-img').src = img.src;
+    document.getElementById('lightbox-caption').textContent = img.alt || '';
+    document.getElementById('lightbox').classList.add('open');
+  }
+  function closeLightbox() {
+    document.getElementById('lightbox').classList.remove('open');
+  }
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+</script>
+</body>
+
+<!-- ═══ BOUTON WHATSAPP FLOTTANT ═══ -->
+
+<!-- ═══ BOUTON WHATSAPP FLOTTANT ═══ -->
+
+<a  class="wa-float"
+  href="https://wa.me/2290195683807?text=Bonjour%20TechKAMA%20Labs%2C%20je%20vous%20contacte%20depuis%20votre%20portfolio."
+  target="_blank"
+  rel="noopener noreferrer"
+  aria-label="Contacter sur WhatsApp"
+>
+  <img
+    src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/whatsapp.svg"
+    width="28"
+    height="28"
+    alt="WhatsApp"
+    style="filter: brightness(0) invert(1); display:block;"
+  >
+  <span class="wa-tooltip">Discutons sur WhatsApp !</span>
+</a>
+
+<style>
+.wa-float {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  z-index: 9999;
+  width: 58px;
+  height: 58px;
+  background: #25D366;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 18px rgba(37,211,102,0.45);
+  text-decoration: none;
+  transition: transform 0.22s cubic-bezier(0.4,0,0.2,1),
+              box-shadow 0.22s cubic-bezier(0.4,0,0.2,1);
+  animation: waPop 0.5s 1.2s cubic-bezier(0.4,0,0.2,1) both;
+}
+.wa-float:hover {
+  transform: scale(1.12) translateY(-3px);
+  box-shadow: 0 8px 28px rgba(37,211,102,0.6);
+}
+.wa-tooltip {
+  position: absolute;
+  right: 68px;
+  background: #1a1a1a;
+  color: #fff;
+  font-size: 0.78rem;
+  font-weight: 600;
+  white-space: nowrap;
+  padding: 6px 12px;
+  border-radius: 8px;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateX(6px);
+  transition: opacity 0.18s ease, transform 0.18s ease;
+  font-family: 'Segoe UI', system-ui, sans-serif;
+}
+.wa-tooltip::after {
+  content: '';
+  position: absolute;
+  right: -6px;
+  top: 50%;
+  transform: translateY(-50%);
+  border: 6px solid transparent;
+  border-left-color: #1a1a1a;
+  border-right: none;
+}
+.wa-float:hover .wa-tooltip {
+  opacity: 1;
+  transform: translateX(0);
+}
+@keyframes waPop {
+  from { opacity: 0; transform: scale(0.5); }
+  to   { opacity: 1; transform: scale(1); }
+}
+@media (max-width: 480px) {
+  .wa-float { bottom: 18px; right: 18px; width: 52px; height: 52px; }
+  .wa-tooltip { display: none; }
+}
+</style>
+<!-- ═══════════════════════════════════ -->
+
+</html>
