@@ -48,10 +48,10 @@
       <div style="position:relative; width:280px; height:280px;">
         <div class="avatar-ring">
           <!-- Photo de profil : remplace le texte "AK" par une vraie photo si tu en as une -->
-          <div class="avatar-inner" id="avatarInner">AK</div>
+          <div class="avatar-inner" id="avatarInner"> <img src="images/KAMA's Logo.png" alt="Photo de profil"> </div>
         </div>
         <!-- Bouton discret pour changer la photo -->
-        <button class="avatar-change-btn" onclick="document.getElementById('avatarFileInput').click()" title="Changer la photo">📷</button>
+        <!-- <button class="avatar-change-btn" onclick="document.getElementById('avatarFileInput').click()" title="Changer la photo">📷</button> -->
         <input type="file" id="avatarFileInput" accept="image/*" style="display:none">
         <div class="floating-badges">
           <div class="fbadge fbadge-1">⚡ Électronique</div>
@@ -105,11 +105,9 @@
       </div>
       <div class="skill-card card-bio">
         <div class="skill-card-icon">🏥</div>
-        <div class="skill-card-title">Biomédical & Électrique</div>
+        <div class="skill-card-title">Conception de couveuses à oeuf</div>
         <div class="skill-tags">
-          <span class="skill-tag">Maintenance biomédicale</span>
-          <span class="skill-tag">Incubateurs/Couveuses</span>
-          <span class="skill-tag">Électrotechnique</span>
+          <!-- <span class="skill-tag">Incubateurs/Couveuses</span> -->
         </div>
       </div>
       <div class="skill-card card-office">
@@ -178,7 +176,7 @@
             <div class="tl-title">Stagiaire – Maintenance d'équipements biomédicaux</div>
             <div class="tl-date tl-date-purple">Déc. 2025 – Jan. 2026</div>
           </div>
-          <div class="tl-org tl-org-purple">CNHU-HKM · Cotonou, Bénin</div>
+          <div class="tl-org tl-org-purple">Hôpital Saint Jean de Dieu de Boko · N'dali, Bénin</div>
           <p class="tl-desc">Maintenance préventive et curative d'équipements médicaux. Participation aux interventions techniques sur les dispositifs biomédicaux du centre hospitalier national.</p>
         </div>
       </div>
@@ -200,7 +198,7 @@
         <div class="timeline-card tl-navy">
           <div class="tl-header">
             <div class="tl-title">Baccalauréat série D</div>
-            <div class="tl-date tl-date-navy">2025</div>
+            <div class="tl-date tl-date-navy">2024-2025</div>
           </div>
           <div class="tl-org tl-org-navy">Collège Roger LAFIA · Parakou, Bénin</div>
           <p class="tl-desc">Baccalauréat scientifique série D (Biologie & Géologie).</p>
@@ -208,13 +206,13 @@
       </div>
 
       <div class="timeline-item">
-        <div class="timeline-dot tl-dot-navy"></div>
-        <div class="timeline-card tl-navy">
+        <div class="timeline-dot tl-dot-coral"></div>
+        <div class="timeline-card tl-coral">
           <div class="tl-header">
             <div class="tl-title">Baccalauréat série C</div>
-            <div class="tl-date tl-date-navy">2024</div>
+            <div class="tl-date tl-date-coral">2023-2024</div>
           </div>
-          <div class="tl-org tl-org-navy">Collège Roger LAFIA · Parakou, Bénin</div>
+          <div class="tl-org tl-org-coral">Collège Roger LAFIA · Parakou, Bénin</div>
           <p class="tl-desc">Baccalauréat scientifique série C (Mathématiques & Sciences Physiques).</p>
         </div>
       </div>
@@ -232,25 +230,25 @@
       </div>
 
       <div class="timeline-item">
-        <div class="timeline-dot tl-dot-navy"></div>
-        <div class="timeline-card tl-navy">
+        <div class="timeline-dot tl-dot-emerald"></div>
+        <div class="timeline-card tl-emerald">
           <div class="tl-header">
             <div class="tl-title">BEPC</div>
-            <div class="tl-date tl-date-navy">2021</div>
+            <div class="tl-date tl-date-emerald">2020-2021</div>
           </div>
-          <div class="tl-org tl-org-navy">Collège Roger LAFIA · Parakou, Bénin</div>
+          <div class="tl-org tl-org-emerald">Collège Roger LAFIA · Parakou, Bénin</div>
           <p class="tl-desc">Brevet d'Études du Premier Cycle.</p>
         </div>
       </div>
 
       <div class="timeline-item">
-        <div class="timeline-dot tl-dot-navy"></div>
-        <div class="timeline-card tl-navy">
+        <div class="timeline-dot tl-dot-cyan"></div>
+        <div class="timeline-card tl-cyan">
           <div class="tl-header">
             <div class="tl-title">CEP</div>
-            <div class="tl-date tl-date-navy">2016</div>
+            <div class="tl-date tl-date-cyan">2016-2017</div>
           </div>
-          <div class="tl-org tl-org-navy">CSP Saint KISITO</div>
+          <div class="tl-org tl-org-cyan">CSP Saint KISITO . Kandi, Bénin</div>
           <p class="tl-desc">Certificat d'Études Primaires.</p>
         </div>
       </div>
@@ -296,7 +294,7 @@
           </div>
           <div class="project-name">Conception d'Incubateur</div>
           <p class="project-desc">Conception et fabrication d'un incubateur avec régulation thermique électronique. Thermostat, résistances chauffantes et capteur de température.</p>
-          <div class="project-status status-done"><span class="status-dot dot-done"></span>Réalisé · INSTI Lokossa</div>
+          <div class="project-status status-done"><span class="status-dot dot-done"></span>Réalisé</div>
           <div class="click-hint"><span class="click-hint-icon">👆</span>Voir les détails & photos</div>
         </div>
       </a>
@@ -336,7 +334,7 @@
           </div>
           <div class="project-name">Simulation Réseau LAN</div>
           <p class="project-desc">Configuration d'une topologie réseau d'entreprise avec Cisco Packet Tracer — routeurs, switches, adressage IP et inter-VLAN.</p>
-          <div class="project-status status-done"><span class="status-dot dot-done"></span>Réalisé · INSTI Lokossa</div>
+          <div class="project-status status-done"><span class="status-dot dot-done"></span>Réalisé</div>
           <div class="click-hint"><span class="click-hint-icon">👆</span>Voir les détails & captures</div>
         </div>
       </a>
@@ -366,7 +364,7 @@
           <p class="project-desc">Apprentissage des fondamentaux de la cybersécurité : protection des systèmes, analyse des menaces réseau, identification de vulnérabilités et protection des données sensibles.</p>
           <div class="project-status status-progress"><span class="status-dot dot-progress"></span>En cours · UTC Academy</div>
         </div>
-      </div>
+      </div>  
 
       <!-- Design graphique -->
       <a href="projet_design.html" class="project-card">
@@ -392,7 +390,7 @@
           </div>
           <div class="project-name">Créations Graphiques</div>
           <p class="project-desc">Réalisations de visuels, mises en page et médias numériques lors du stage au Centre FINALO. Maîtrise de la suite Adobe pour la création de contenu print et digital.</p>
-          <div class="project-status status-done"><span class="status-dot dot-done"></span>Réalisé · 2022</div>
+          <div class="project-status status-done"><span class="status-dot dot-done"></span>Réalisé</div>
           <div class="click-hint"><span class="click-hint-icon">👆</span>Voir la galerie</div>
         </div>
       </a>
@@ -602,6 +600,8 @@
 }
 </style>
 <!-- ═══════════════════════════════════ -->
+
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 
 </body>
 </html>

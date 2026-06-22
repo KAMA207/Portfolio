@@ -88,7 +88,18 @@
     cursor: pointer;
     transition: background 0.2s, border-color 0.2s;
     position: relative;
+    overflow: hidden;
+    width: 200px;   /* adapte selon ton layout */
+    height: 150px;
   }
+
+  .gallery-placeholder img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
   .gallery-placeholder:hover { background: #A7F3D0; border-color: #047857; }
   .gallery-placeholder .ph-icon { font-size: 2.2rem; }
   .gallery-placeholder .ph-label { font-size: 0.75rem; color: #065F46; font-weight: 600; text-align: center; padding: 0 0.5rem; }
@@ -154,7 +165,7 @@
       <div class="project-meta">
         <div class="meta-item"><div class="meta-label">Statut</div><div class="meta-value">✅ Réalisé</div></div>
         <div class="meta-item"><div class="meta-label">Outil</div><div class="meta-value">Cisco Packet Tracer</div></div>
-        <div class="meta-item"><div class="meta-label">Formation</div><div class="meta-value">INSTI Lokossa</div></div>
+        <div class="meta-item"><div class="meta-label">Formation</div><div class="meta-value">UTC  Academy</div></div>
       </div>
     </div>
     <div class="hero-visual">
@@ -204,43 +215,27 @@
   <div class="gallery-grid" id="galleryGrid">
 
     <!-- 6 placeholders avec labels spécifiques -->
-    <div class="gallery-placeholder" onclick="triggerUpload(this)">
-      <img src="images/A.png" alt="Projet Réseau LAN - Capture 1" style="display:none;">
-      <div class="ph-label">Topologie<br>complète</div>
-      <div class="ph-hint">+ Capture</div>
+    <div class="gallery-placeholder" onclick="openLightbox(this)">
+      <img src="images/A.png" alt="Projet Réseau LAN - Capture 1">
     </div>
-    <div class="gallery-placeholder" onclick="triggerUpload(this)">
-      <img src="images/B.png" alt="Projet Réseau LAN - Capture 2" style="display:none;">
-      <div class="ph-label">Config<br>du routeur</div>
-      <div class="ph-hint">+ Capture</div>
+    <div class="gallery-placeholder" onclick="openLightbox(this)">
+      <img src="images/B.png" alt="Projet Réseau LAN - Capture 2">
     </div>
-    <div class="gallery-placeholder" onclick="triggerUpload(this)">
-      <img src="images/C.png" alt="Projet Réseau LAN - Capture 3" style="display:none;">
-      <div class="ph-label">Config<br>du switch</div>
-      <div class="ph-hint">+ Capture</div>
+    <div class="gallery-placeholder" onclick="openLightbox(this)">
+      <img src="images/C.png" alt="Projet Réseau LAN - Capture 3">
     </div>
-    <div class="gallery-placeholder" onclick="triggerUpload(this)">
-      <img src="images/D.png" alt="Projet Réseau LAN - Capture 4" style="display:none;">
-      <div class="ph-label">Plan<br>d'adressage IP</div>
-      <div class="ph-hint">+ Capture</div>
+    <div class="gallery-placeholder" onclick="openLightbox(this)">
+      <img src="images/D.png" alt="Projet Réseau LAN - Capture 4">
     </div>
-    <div class="gallery-placeholder" onclick="triggerUpload(this)">
+    <div class="gallery-placeholder" onclick="openLightbox(this)">
       <img src="images/E.png" alt="Projet Réseau LAN - Capture 5" style="display:none;">
       <div class="ph-icon">✅</div>
       <div class="ph-label">Test ping<br>réussi</div>
-      <div class="ph-hint">+ Capture</div>
     </div>
-    <div class="gallery-placeholder" onclick="triggerUpload(this)">
+    <div class="gallery-placeholder" onclick="openLightbox(this)">
       <img src="images/F.png" alt="Projet Réseau LAN - Capture 6" style="display:none;">
       <div class="ph-icon">📊</div>
       <div class="ph-label">Simulation<br>du trafic</div>
-      <div class="ph-hint">+ Capture</div>
-    </div>
-
-    <!-- Carte "Ajouter d'autres captures" -->
-    <div class="gallery-add-card" onclick="document.getElementById('fileInput').click(); currentTarget = null;">
-      <div class="add-icon">➕</div>
-      <div class="add-text">Ajouter<br>d'autres captures</div>
     </div>
 
   </div>
@@ -251,7 +246,7 @@
   <div class="desc-grid">
     <div class="desc-card">
       <h3>📋 Contexte</h3>
-      <p>Projet réalisé dans le cadre du cours de réseaux informatiques à l'INSTI Lokossa. L'objectif était de simuler une infrastructure réseau d'entreprise complète avec Cisco Packet Tracer.</p>
+      <p>L'objectif est de simuler une infrastructure réseau d'entreprise complète avec Cisco Packet Tracer.</p>
     </div>
     <div class="desc-card">
       <h3>🎯 Objectifs</h3>
