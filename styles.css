@@ -332,7 +332,33 @@ section { padding: 5.5rem 2.5rem; }
 .skill-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-lg); }
 .skill-card:hover::before { opacity: 1; }
 
-.skill-card-icon  { font-size: 2.5rem; margin-bottom: 1rem; display: block; }
+.skill-card-icon {
+  width: 100%;
+  aspect-ratio: 4 / 3;            /* même hauteur pour toutes les cartes */
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  margin-bottom: 1.25rem;
+  box-shadow: var(--shadow-sm);
+}
+.skill-card-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;              /* remplit l'espace sans déformer */
+  object-position: center;
+  display: block;
+  transition: transform var(--transition-slow);
+}
+.skill-card:hover .skill-card-icon img { transform: scale(1.05); }
+
+/* Recadrage : tes images sont en portrait, on centre sur le sujet */
+.card-dev    .skill-card-icon img { object-position: center 54%; }
+.card-design .skill-card-icon img { object-position: center 50%; }
+.card-reseau .skill-card-icon img { object-position: center 55%; }
+.card-bio    .skill-card-icon img { object-position: center 55%; }
+.card-office .skill-card-icon img { object-position: center 50%; }
+.card-langues .skill-card-icon img { object-position: center 55%; }
+
+
 .skill-card-title { font-size: var(--text-lg); font-weight: 700; margin-bottom: 0.75rem; }
 .skill-tags { display: flex; flex-wrap: wrap; gap: 6px; }
 .skill-tag  { font-size: var(--text-xs); padding: 4px 10px; border-radius: var(--radius-full); font-weight: 600; transition: transform var(--transition-fast); }
