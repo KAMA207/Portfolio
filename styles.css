@@ -357,6 +357,8 @@ section { padding: 5.5rem 2.5rem; }
 .card-bio    .skill-card-icon img { object-position: center 55%; }
 .card-office .skill-card-icon img { object-position: center 50%; }
 .card-langues .skill-card-icon img { object-position: center 55%; }
+.card-cao .skill-card-icon img { object-position: center 50%; }
+.card-circuit .skill-card-icon img { object-position: center 50%; }
 
 
 .skill-card-title { font-size: var(--text-lg); font-weight: 700; margin-bottom: 0.75rem; }
@@ -383,6 +385,12 @@ section { padding: 5.5rem 2.5rem; }
 .card-langues .skill-card-title { color: #5B21B6; }
 .card-langues .lang-row  { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
 .card-langues .lang-name { font-size: 0.88rem; font-weight: 600; color: #4C1D95; }
+.card-cao { background: #FEF2F2; }
+.card-cao .skill-card-title { color: #991B1B; }
+.card-cao .skill-tag { background: #FECACA; color: #7F1D1D; }
+.card-circuit { background: #FFF1E6; }
+.card-circuit .skill-card-title { color: #9A3412; }
+.card-circuit .skill-tag { background: #FED7AA; color: #7C2D12; }
 .lang-bar  { flex: 1; height: 6px; background: #DDD6FE; border-radius: 10px; margin: 0 10px; overflow: hidden; }
 .lang-fill {
   height: 100%; border-radius: 10px;
@@ -401,6 +409,11 @@ section { padding: 5.5rem 2.5rem; }
 ══════════════════════════════════════════ */
 #experiences { background: var(--light); }
 
+:root {
+  --emerald: #10B981;
+  --cyan:    #06B6D4;
+}
+
 .timeline { position: relative; padding-left: 2.5rem; }
 .timeline::before {
   content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
@@ -418,6 +431,12 @@ section { padding: 5.5rem 2.5rem; }
 .tl-dot-gold   { background: var(--gold);   box-shadow: 0 0 0 2px var(--gold); }
 .tl-dot-purple { background: var(--purple); box-shadow: 0 0 0 2px var(--purple); }
 .tl-dot-teal   { background: var(--teal);   box-shadow: 0 0 0 2px var(--teal); }
+.tl-dot-navy    { background: var(--navy);    box-shadow: 0 0 0 2px var(--navy); }
+.tl-dot-coral   { background: var(--coral);   box-shadow: 0 0 0 2px var(--coral); }
+.tl-dot-pink    { background: var(--pink);    box-shadow: 0 0 0 2px var(--pink); }
+.tl-dot-emerald { background: var(--emerald); box-shadow: 0 0 0 2px var(--emerald); }
+.tl-dot-cyan    { background: var(--cyan);    box-shadow: 0 0 0 2px var(--cyan); }
+
 
 .timeline-card {
   background: var(--white); border-radius: var(--radius-md);
@@ -445,6 +464,10 @@ section { padding: 5.5rem 2.5rem; }
 .tl-date-pink { background: #FCE7F3; color: #9D174D;}
 .tl-date-emerald { background: #D1FAE5; color: #065F46; }
 .tl-date-cyan { background: #CFFAFE; color: #0E7490; }
+.tl-dot-indigo { background: #4F46E5; box-shadow: 0 0 0 2px #4F46E5; }
+.tl-indigo     { border-left-color: #4F46E5; }
+.tl-date-indigo { background: #E0E7FF; color: #3730A3; }
+.tl-org-indigo  { color: #4F46E5; }
 
 .tl-org    { font-size: var(--text-base); font-weight: 600; margin-bottom: 0.75rem; }
 .tl-org-gold   { color: var(--gold); }
